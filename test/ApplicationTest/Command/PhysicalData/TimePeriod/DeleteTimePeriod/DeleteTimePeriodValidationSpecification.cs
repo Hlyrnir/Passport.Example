@@ -1,0 +1,109 @@
+﻿using Application.Command.PhysicalData.TimePeriod.Delete;
+using Application.Error;
+using Application.Interface.Result;
+using Application.Interface.Time;
+using Application.Interface.Validation;
+using ApplicationTest.Common;
+using Domain.Interface.PhysicalData;
+using DomainFaker;
+using FluentAssertions;
+using Xunit;
+
+namespace ApplicationTest.Command.PhysicalData.TimePeriod.DeleteTimePeriod
+{
+	public sealed class DeleteTimePeriodValidationSpecification : IClassFixture<PhysicalDataFixture>
+	{
+		private readonly PhysicalDataFixture fxtPhysicalData;
+		private readonly ITimeProvider prvTime;
+
+		public DeleteTimePeriodValidationSpecification(PhysicalDataFixture fxtPhysicalData)
+		{
+			this.fxtPhysicalData = fxtPhysicalData;
+			this.prvTime = fxtPhysicalData.TimeProvider;
+		}
+
+		[Fact]
+		public async Task Delete_ShouldReturnTrue_WhenTimePeriodExists()
+		{
+			// Arrange
+			IPhysicalDimension pdPhysicalDimension = DataFaker.PhysicalDimension.CreateTimeDefault();
+			await fxtPhysicalData.PhysicalDimensionRepository.InsertAsync(pdPhysicalDimension, prvTime.GetUtcNow(), CancellationToken.None);
+
+			ITimePeriod pdTimePeriod = DataFaker.TimePeriod.CreateDefault(pdPhysicalDimension);
+			await fxtPhysicalData.TimePeriodRepository.InsertAsync(pdTimePeriod, prvTime.GetUtcNow(), CancellationToken.None);
+
+			DeleteTimePeriodCommand cmdDelete = new DeleteTimePeriodCommand()
+			{
+				TimePeriodId = pdTimePeriod.Id,
+				RestrictedPassportId = Guid.NewGuid(),
+			};
+
+			IValidation<DeleteTimePeriodCommand> hndlValidation = new DeleteTimePeriodValidation(
+				srvValidation: fxtPhysicalData.PhysicalDataValiation,
+				repoTimePeriod: fxtPhysicalData.TimePeriodRepository);
+
+			// Act
+			IMessageResult<bool> rsltValidation = await hndlValidation.ValidateAsync(
+				msgMessage: cmdDelete,
+				tknCancellation: CancellationToken.None);
+
+			// Assert
+			rsltValidation.Match(
+				msgError =>
+				{
+					msgError.Should().BeNull();
+
+					return false;
+				},
+				bResult =>
+				{
+					bResult.Should().BeTrue();
+
+					return true;
+				});
+
+			// Clean up
+			await fxtPhysicalData.TimePeriodRepository.DeleteAsync(pdTimePeriod, CancellationToken.None);
+			await fxtPhysicalData.PhysicalDimensionRepository.DeleteAsync(pdPhysicalDimension, CancellationToken.None);
+		}
+
+		[Fact]
+		public async Task Delete_ShouldReturnMessageError_WhenTimePeriodDoesNotExist()
+		{
+			// Arrange
+			Guid guTimePeriodId = Guid.NewGuid();
+
+			DeleteTimePeriodCommand cmdDelete = new DeleteTimePeriodCommand()
+			{
+				TimePeriodId = guTimePeriodId,
+				RestrictedPassportId = Guid.NewGuid(),
+			};
+
+			IValidation<DeleteTimePeriodCommand> hndlValidation = new DeleteTimePeriodValidation(
+				srvValidation: fxtPhysicalData.PhysicalDataValiation,
+				repoTimePeriod: fxtPhysicalData.TimePeriodRepository);
+
+			// Act
+			IMessageResult<bool> rsltValidation = await hndlValidation.ValidateAsync(
+				msgMessage: cmdDelete,
+				tknCancellation: CancellationToken.None);
+
+			// Assert
+			rsltValidation.Match(
+				msgError =>
+				{
+					msgError.Should().NotBeNull();
+					msgError.Code.Should().Be(ValidationError.Code.Method);
+					msgError.Description.Should().Contain($"Time period {guTimePeriodId} does not exist.");
+
+					return false;
+				},
+				bResult =>
+				{
+					bResult.Should().BeFalse();
+
+					return true;
+				});
+		}
+	}
+}
