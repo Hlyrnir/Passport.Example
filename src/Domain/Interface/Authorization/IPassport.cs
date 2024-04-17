@@ -21,6 +21,7 @@ namespace Domain.Interface.Authorization
 		bool HasVisa(IPassportVisa ppVisa);
 		bool IsExpired(DateTimeOffset dtDate);
 		bool TryJoinToAuthority(IPassport ppPassport, DateTimeOffset dtJointedAt);
+		bool TryReset(IPassport ppPassport, DateTimeOffset dtResetAt);
 		bool TryAddVisa(IPassportVisa ppVisa);
 		bool TryRemoveVisa(IPassportVisa ppVisa);
 

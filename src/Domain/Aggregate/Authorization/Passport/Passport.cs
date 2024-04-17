@@ -135,6 +135,23 @@ namespace Domain.Aggregate.Authorization.Passport
 			return true;
 		}
 
+		public bool TryReset(IPassport ppPassport, DateTimeOffset dtResetAt)
+		{
+			if (ppPassport.IsAuthority == false)
+				return false;
+
+			if (ppPassport.IsEnabled == false)
+				return false;
+
+			bIsAuthority = false;
+			bIsEnabled = false;
+			dtExpiredAt = dtResetAt;
+			dtLastCheckedAt = dtResetAt;
+			guLastCheckedBy = ppPassport.Id;
+
+			return true;
+		}
+
 		public bool TryAddVisa(IPassportVisa ppVisa)
 		{
 			if (ppVisa is null)

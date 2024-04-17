@@ -14,7 +14,7 @@ namespace Infrastructure.Persistance.Authorization
 {
     internal sealed class PassportVisaRepository : IPassportVisaRepository
 	{
-		private readonly ISqliteDataAccess sqlDataAccess;
+		private readonly IDataAccess sqlDataAccess;
 
 		public PassportVisaRepository(IPassportDataAccess sqlDataAccess)
 		{

@@ -15,7 +15,7 @@ namespace Infrastructure.Persistance.PhysicalData
 {
 	internal sealed class PhysicalDimensionRepository : IPhysicalDimensionRepository
 	{
-		private readonly ISqliteDataAccess sqlDataAccess;
+		private readonly IDataAccess sqlDataAccess;
 
 		public PhysicalDimensionRepository(IPhysicalDataAccess sqlDataAccess)
 		{

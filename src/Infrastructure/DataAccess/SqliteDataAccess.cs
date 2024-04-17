@@ -5,7 +5,7 @@ using System.Data;
 
 namespace Infrastructure.DataAccess
 {
-	internal class SqliteDataAccess : ISqliteDataAccess, IDisposable
+	internal class SqliteDataAccess : IDataAccess, IDisposable
 	{
 		private IDbConnection sqlConnection;
 		private IDbTransaction? sqlTransaction;

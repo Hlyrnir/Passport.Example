@@ -1,6 +1,6 @@
 ﻿namespace Application.Interface.DataAccess
 {
-	public interface IPassportDataAccess : ISqliteDataAccess
+	public interface IPassportDataAccess : IDataAccess
 	{
 
 	}

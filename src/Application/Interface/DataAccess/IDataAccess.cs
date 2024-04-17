@@ -2,7 +2,7 @@
 
 namespace Application.Interface.DataAccess
 {
-	public interface ISqliteDataAccess
+	public interface IDataAccess
 	{
 		IDbConnection Connection { get; }
 		IDbTransaction? Transaction { get; }

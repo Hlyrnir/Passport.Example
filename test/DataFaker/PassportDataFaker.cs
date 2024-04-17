@@ -10,13 +10,15 @@ namespace DomainFaker
 
 		public static class Passport
 		{
+			public static readonly DateTimeOffset LastCheckedAt = new DateTimeOffset(2000, 1, 31, 0, 0, 0, 0, 0, TimeSpan.Zero);
+
 			public static IPassport CreateDefault()
 			{
 				IPassport? ppPassport = Domain.Aggregate.Authorization.Passport.Passport.Create(
-					dtExpiredAt: new DateTimeOffset(2000, 1, 31, 0, 0, 0, 0, 0, TimeSpan.Zero),
+					dtExpiredAt: Passport.LastCheckedAt.AddDays(30),
 					guHolderId: Guid.NewGuid(),
 					guIssuedBy: Guid.NewGuid(),
-					dtLastCheckedAt: new DateTimeOffset(2000, 1, 1, 0, 0, 0, 0, 0, TimeSpan.Zero));
+					dtLastCheckedAt: Passport.LastCheckedAt);
 
 				if (ppPassport is null)
 					throw new NullReferenceException();
@@ -29,13 +31,13 @@ namespace DomainFaker
 				IPassportTransferObject dtoPassport = new PassportTransferObjectFaker()
 				{
 					ConcurrencyStamp = Guid.NewGuid().ToString(),
-					ExpiredAt = new DateTimeOffset(2000, 1, 31, 0, 0, 0, 0, 0, TimeSpan.Zero),
+					ExpiredAt = Passport.LastCheckedAt.AddDays(30),
 					HolderId = Guid.NewGuid(),
 					Id = Guid.NewGuid(),
 					IsAuthority = true,
 					IsEnabled = true,
 					IssuedBy = Guid.NewGuid(),
-					LastCheckedAt = new DateTimeOffset(2000, 1, 1, 0, 0, 0, 0, 0, TimeSpan.Zero),
+					LastCheckedAt = Passport.LastCheckedAt,
 					LastCheckedBy = Guid.NewGuid()
 				};
 
@@ -84,18 +86,20 @@ namespace DomainFaker
 
 		public static class PassportTransferObject
 		{
+			public static readonly DateTimeOffset LastCheckedAt = new DateTimeOffset(2000, 1, 31, 0, 0, 0, 0, 0, TimeSpan.Zero);
+
 			public static IPassportTransferObject Create()
 			{
 				return new PassportTransferObjectFaker()
 				{
 					ConcurrencyStamp = Guid.NewGuid().ToString(),
-					ExpiredAt = new DateTimeOffset(2000, 1, 31, 0, 0, 0, 0, 0, TimeSpan.Zero),
+					ExpiredAt = PassportTransferObject.LastCheckedAt.AddDays(30),
 					HolderId = Guid.NewGuid(),
 					Id = Guid.NewGuid(),
 					IsAuthority = false,
 					IsEnabled = false,
 					IssuedBy = Guid.NewGuid(),
-					LastCheckedAt = new DateTimeOffset(2000, 1, 1, 0, 0, 0, 0, 0, TimeSpan.Zero),
+					LastCheckedAt = PassportTransferObject.LastCheckedAt,
 					LastCheckedBy = Guid.NewGuid(),
 					RefreshToken = Guid.NewGuid().ToString()
 				};

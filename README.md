@@ -1,3 +1,5 @@
+#### Description
+
 This repository shows an implementation of the idea to use a passport for authorization.
 
 - Passport: A passport has to be enabled and valid to generate a JWT token.
@@ -13,7 +15,7 @@ For realisation following concepts has been used.
 - ORM using Dapper
 
 **Important!**
-There aren't any Presentation/appsettings.json files included in this repository. Create these files manually with following content.
+There aren't any src/Presentation/appsettings.json files included in this repository. Create these files manually with following content.
 
     {
       "AllowedHosts": "*",
@@ -42,3 +44,11 @@ There aren't any Presentation/appsettings.json files included in this repository
         "Audience": "https://localhost:[PORT]"
       }
     }
+
+
+#### Database
+
+- For reference to generate a database see _src/Infrastructure/Extension/Passport/...Extension.cs_.
+- Use interface _src/Application/Interface/DataAccess/IDataAccess_ for implementing any relational database and mark an inherited class with the interface IPassportDataAccess (see _src/Infrastructure/DataAccess/PassportDataAccess.cs_).
+
+**Note:** Each passport can be enabled by an existing authority. Initial this authorized passport must be created manually in the database.

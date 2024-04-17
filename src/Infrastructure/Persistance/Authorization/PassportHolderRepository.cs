@@ -14,7 +14,7 @@ namespace Infrastructure.Persistance.Authorization
 {
     internal sealed class PassportHolderRepository : IPassportHolderRepository
 	{
-		private readonly ISqliteDataAccess sqlDataAccess;
+		private readonly IDataAccess sqlDataAccess;
 		private readonly IPassportSetting ppSetting;
 
 		public PassportHolderRepository(IPassportDataAccess sqlDataAccess, IPassportSetting ppSetting)

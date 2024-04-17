@@ -3,9 +3,9 @@ using Application.Interface.UnitOfWork;
 
 namespace Infrastructure.UnitOfWork
 {
-	internal sealed class UnitOfWork<T> : IUnitOfWork<T> where T : ISqliteDataAccess
+	internal sealed class UnitOfWork<T> : IUnitOfWork<T> where T : IDataAccess
 	{
-		private readonly ISqliteDataAccess sqlDataAccess;
+		private readonly IDataAccess sqlDataAccess;
 
 		public UnitOfWork(T sqlDataAccess)
 		{

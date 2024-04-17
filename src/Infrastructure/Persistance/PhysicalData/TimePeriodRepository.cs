@@ -15,7 +15,7 @@ namespace Infrastructure.Persistance.PhysicalData
 {
 	internal sealed class TimePeriodRepository : ITimePeriodRepository
 	{
-		private readonly ISqliteDataAccess sqlDataAccess;
+		private readonly IDataAccess sqlDataAccess;
 
 		public TimePeriodRepository(IPhysicalDataAccess sqlDataAccess)
 		{

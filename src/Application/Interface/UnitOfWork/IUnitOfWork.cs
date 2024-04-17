@@ -2,7 +2,7 @@
 
 namespace Application.Interface.UnitOfWork
 {
-	public interface IUnitOfWork<T> where T : ISqliteDataAccess
+	public interface IUnitOfWork<T> where T : IDataAccess
 	{
 		/// <summary>
 		/// 

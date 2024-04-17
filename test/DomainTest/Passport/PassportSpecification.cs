@@ -12,10 +12,11 @@ namespace DomainTest.Passport
 	{
 		public PassportSpecification()
 		{
+
 		}
 
 		[Fact]
-		public void Initialize_ShouldReturnPassport_WhenTransferObjectExists()
+		public void Initialize_ShouldReturnPassport_WhenTransferObjectIsValid()
 		{
 			// Arrange
 			IPassportTransferObject dtoPassport = DataFaker.PassportTransferObject.Create();
@@ -57,7 +58,7 @@ namespace DomainTest.Passport
 		}
 
 		[Fact]
-		public void Write_ShouldContainPassportVisa_WhenPassportVisaWereInitialized()
+		public void Initialize_ShouldContainPassportVisa_WhenPassportVisaWereInitialized()
 		{
 			// Arrange
 			IPassportTransferObject dtoPassport = DataFaker.PassportTransferObject.Create();
@@ -82,200 +83,439 @@ namespace DomainTest.Passport
 			ppPassport.VisaId.Should().Contain(lstPassportVisaId[3]);
 		}
 
-		//[Fact]
-		//public void Initialize_ShouldReturnPassport_WhenBusinessLogicIsOk()
-		//{
-		//	// Arrange
-		//	string sConcurrencyStamp = Guid.NewGuid().ToString();
-		//	DateTimeOffset dtExpiredAt = prvTime.GetUtcNow();
-		//	bool bHasPermissionToCommand = false;
-		//	bool bHasPermissionToQuery = false;
-		//	Guid guHolderId = Guid.NewGuid();
-		//	Guid guId = Guid.NewGuid();
-		//	bool bIsAuthority = false;
-		//	bool bIsEnabled = false;
-		//	Guid guIssuedBy = Guid.NewGuid();
-		//	DateTimeOffset dtLastCheckedAt = prvTime.GetUtcNow().AddHours(-1.0);
-		//	Guid guLastCheckedBy = Guid.NewGuid();
-		//	string sRefreshToken = Guid.NewGuid().ToString();
-		//	IEnumerable<IPassportVisa> enumPassportVisa = Enumerable.Empty<IPassportVisa>();
+		[Fact]
+		public void HasVisa_ShouldBeTrue_WhenPassportVisaExists()
+		{
+			// Arrange
+			IPassportTransferObject dtoPassport = DataFaker.PassportTransferObject.Create();
+			IPassportVisa ppVisa = DataFaker.PassportVisa.CreateDefault();
 
-		//	// Act
-		//	IPassport? ppPassport = Domain.Aggregate.Authorization.Passport.Passport.Initialize(
-		//		sConcurrencyStamp: sConcurrencyStamp,
-		//		dtExpiredAt: dtExpiredAt,
-		//		bHasPermissionToCommand: bHasPermissionToCommand,
-		//		bHasPermissionToQuery: bHasPermissionToQuery,
-		//		guHolderId: guHolderId,
-		//		guId: guId,
-		//		bIsAuthority: bIsAuthority,
-		//		bIsEnabled: bIsEnabled,
-		//		guIssuedBy: guIssuedBy,
-		//		dtLastCheckedAt: dtLastCheckedAt,
-		//		guLastCheckedBy: guLastCheckedBy,
-		//		sRefreshToken: sRefreshToken,
-		//		enumVisa: enumPassportVisa);
+			IList<Guid> lstPassportVisaId = new List<Guid>()
+			{
+				ppVisa.Id
+			};
 
-		//	if (ppPassport is null)
-		//		return;
+			IPassport? ppPassport = Domain.Aggregate.Authorization.Passport.Passport.Initialize(dtoPassport: dtoPassport, enumPassportVisaId: lstPassportVisaId.AsEnumerable());
 
-		//	// Assert
-		//	ppPassport.Should().NotBeNull();
-		//	ppPassport.ConcurrencyStamp.Should().Be(sConcurrencyStamp);
-		//	ppPassport.ExpiredAt.Should().Be(dtExpiredAt);
-		//	ppPassport.HolderId.Should().Be(guHolderId);
-		//	ppPassport.Id.Should().Be(guId);
-		//	ppPassport.IsAuthority.Should().Be(bIsAuthority);
-		//	ppPassport.IsEnabled.Should().Be(bIsEnabled);
-		//	ppPassport.IssuedBy.Should().Be(guIssuedBy);
-		//	ppPassport.LastCheckedAt.Should().Be(dtLastCheckedAt);
-		//	ppPassport.LastCheckedBy.Should().Be(guLastCheckedBy);
-		//}
+			if (ppPassport is null)
+				return;
 
-		//[Fact]
-		//public void Initialize_ShouldReturnNull_WhenPassportVisaIsNotUnique()
-		//{
-		//	// Arrange
-		//	string sConcurrencyStamp = Guid.NewGuid().ToString();
-		//	DateTimeOffset dtExpiredAt = prvTime.GetUtcNow();
-		//	bool bHasPermissionToCommand = false;
-		//	bool bHasPermissionToQuery = false;
-		//	Guid guHolderId = Guid.NewGuid();
-		//	Guid guId = Guid.NewGuid();
-		//	bool bIsAuthority = false;
-		//	bool bIsEnabled = false;
-		//	Guid guIssuedBy = Guid.NewGuid();
-		//	DateTimeOffset dtLastCheckedAt = prvTime.GetUtcNow().AddHours(-1.0);
-		//	Guid guLastCheckedBy = Guid.NewGuid();
-		//	string sRefreshToken = Guid.NewGuid().ToString();
+			// Act
+			bool bResult = ppPassport.HasVisa(ppVisa);
 
-		//	IPassportVisa ppVisa = DataFaker.PassportVisa.CreateDefault();
+			// Assert
+			bResult.Should().BeTrue();
+		}
 
-		//	// Act
-		//	IEnumerable<IPassportVisa> enumPassportVisa = new List<IPassportVisa>()
-		//	{
-		//		DataFaker.PassportVisa.CreateDefault(),
-		//		DataFaker.PassportVisa.CreateDefault(),
-		//		ppVisa,
-		//		ppVisa
-		//	};
+		[Fact]
+		public void TryAddVisa_ShouldBeTrue_WhenPassportVisaIdIsUnique()
+		{
+			// Arrange
+			IPassportTransferObject dtoPassport = DataFaker.PassportTransferObject.Create();
+			IPassportVisa ppVisa = DataFaker.PassportVisa.CreateDefault();
 
-		//	IPassport? ppPassport = Domain.Aggregate.Authorization.Passport.Passport.Initialize(
-		//		sConcurrencyStamp: sConcurrencyStamp,
-		//		dtExpiredAt: dtExpiredAt,
-		//		bHasPermissionToCommand: bHasPermissionToCommand,
-		//		bHasPermissionToQuery: bHasPermissionToQuery,
-		//		guHolderId: guHolderId,
-		//		guId: guId,
-		//		bIsAuthority: bIsAuthority,
-		//		bIsEnabled: bIsEnabled,
-		//		guIssuedBy: guIssuedBy,
-		//		dtLastCheckedAt: dtLastCheckedAt,
-		//		guLastCheckedBy: guLastCheckedBy,
-		//		sRefreshToken: sRefreshToken,
-		//		enumVisa: enumPassportVisa);
+			IList<Guid> lstPassportVisaId = new List<Guid>()
+			{
+				Guid.NewGuid()
+			};
 
-		//	if (ppPassport is null)
-		//		return;
+			IPassport? ppPassport = Domain.Aggregate.Authorization.Passport.Passport.Initialize(
+				dtoPassport: dtoPassport,
+				enumPassportVisaId: lstPassportVisaId.AsEnumerable());
 
-		//	// Assert
-		//	ppPassport.Should().BeNull();
-		//}
+			if (ppPassport is null)
+				return;
 
-		//[Fact]
-		//public void HasVisaWithUnknownVisaShouldFail()
-		//{
-		//    // Arrange
-		//    bool bResult = false;
+			// Act
+			bool bResult = ppPassport.TryAddVisa(ppVisa);
 
-		//    PassportVisa ppVisa = new PassportVisa();
-		//    ppVisa.Initialize(Guid.NewGuid());
+			// Assert
+			bResult.Should().BeTrue();
+		}
 
-		//    // Act
-		//    bResult = ppPassport.HasVisa(ppVisa);
+		[Fact]
+		public void TryAddVisa_ShouldBeFalse_WhenPassportVisaIdIsNotUnique()
+		{
+			// Arrange
+			IPassportTransferObject dtoPassport = DataFaker.PassportTransferObject.Create();
+			IPassportVisa ppVisa = DataFaker.PassportVisa.CreateDefault();
 
-		//    // Assert
-		//    Assert.False(bResult);
-		//}
+			IList<Guid> lstPassportVisaId = new List<Guid>()
+			{
+				ppVisa.Id
+			};
 
-		//      [Fact]
-		//      public void InvalidVisaShouldBeIgnored()
-		//      {
-		//          // Arrange
-		//          bool bIsAdded = true;
-		//          bool bIsRemoved = true;
+			IPassport? ppPassport = Domain.Aggregate.Authorization.Passport.Passport.Initialize(
+				dtoPassport: dtoPassport,
+				enumPassportVisaId: lstPassportVisaId.AsEnumerable());
 
-		//          PassportVisa? ppVisa = null;
+			if (ppPassport is null)
+				return;
 
-		//          // Act
-		//          bIsAdded = ppPassport.TryAddVisa(ppVisa!);
-		//          bIsRemoved = ppPassport.TryRemoveVisa(ppVisa!);
+			// Act
+			bool bResult = ppPassport.TryAddVisa(ppVisa);
 
-		//          // Assert
-		//          Assert.False(bIsAdded);
-		//          Assert.False(bIsRemoved);
-		//      }
+			// Assert
+			bResult.Should().BeFalse();
+		}
 
-		//      [Fact]
-		//      public void PassportShouldContainUniqueVisa()
-		//{
-		//	// Arrange
-		//	bool bIsNotAdded = true;
-		//	PassportVisa ppVisa = CreateVisa();
+		[Fact]
+		public void RemoveVisa_ShouldBeTrue_WhenPassportVisaExists()
+		{
+			// Arrange
+			IPassportTransferObject dtoPassport = DataFaker.PassportTransferObject.Create();
+			IPassportVisa ppVisa = DataFaker.PassportVisa.CreateDefault();
 
-		//	// Act
-		//	bIsNotAdded = ppPassport.TryAddVisa(ppVisa);
+			IList<Guid> lstPassportVisaId = new List<Guid>()
+			{
+				ppVisa.Id
+			};
 
-		//	// Assert
-		//	Assert.False(bIsNotAdded);
-		//}
+			IPassport? ppPassport = Domain.Aggregate.Authorization.Passport.Passport.Initialize(
+				dtoPassport: dtoPassport,
+				enumPassportVisaId: lstPassportVisaId.AsEnumerable());
 
-		//[Fact]
-		//      public void PassportShouldContainAddedVisa()
-		//      {
-		//          // Arrange
-		//          bool bIsAdded = false;
-		//          int iInitialVisaCount = ppPassport.Visa.Count;
+			if (ppPassport is null)
+				return;
 
-		//          PassportVisa ppVisa = new PassportVisa();
-		//          ppVisa.Initialize(Guid.NewGuid());
+			// Act
+			bool bResult = ppPassport.TryRemoveVisa(ppVisa);
 
-		//          // Act
-		//          bIsAdded = ppPassport.TryAddVisa(ppVisa);
+			// Assert
+			bResult.Should().BeTrue();
+		}
 
-		//          // Assert
-		//          Assert.True(bIsAdded);
-		//          Assert.True(ppPassport.Visa.Count == iInitialVisaCount + 1);
-		//          Assert.Contains<IPassportVisa>(ppVisa, ppPassport.Visa);
-		//      }
+		[Fact]
+		public void RemoveVisa_ShouldBeFalse_WhenPassportVisaDoesNotExist()
+		{
+			// Arrange
+			IPassportTransferObject dtoPassport = DataFaker.PassportTransferObject.Create();
+			IPassportVisa ppVisa = DataFaker.PassportVisa.CreateDefault();
 
-		//      [Fact]
-		//      public void PassportShouldNotContainRemovedVisa()
-		//      {
-		//          // Arrange
-		//          bool bIsRemoved = false;
-		//          int iInitialVisaCount = ppPassport.Visa.Count;
+			IList<Guid> lstPassportVisaId = new List<Guid>()
+			{
+				Guid.NewGuid()
+			};
 
-		//          PassportVisa ppVisa = CreateVisa();
+			IPassport? ppPassport = Domain.Aggregate.Authorization.Passport.Passport.Initialize(
+				dtoPassport: dtoPassport,
+				enumPassportVisaId: lstPassportVisaId.AsEnumerable());
 
-		//          // Act
-		//          bIsRemoved = ppPassport.TryRemoveVisa(ppVisa);
+			if (ppPassport is null)
+				return;
 
-		//          // Assert
-		//          Assert.True(bIsRemoved);
-		//          Assert.True(ppPassport.Visa.Count == iInitialVisaCount + (-1));
-		//          Assert.DoesNotContain<IPassportVisa>(ppVisa, ppPassport.Visa);
-		//      }
+			// Act
+			bool bResult = ppPassport.TryRemoveVisa(ppVisa);
 
-		//private PassportVisa CreateVisa()
-		//{
-		//	return new PassportVisa()
-		//	{
-		//		ConcurrencyStamp = ppPassport.Visa[0].ConcurrencyStamp,
-		//		Id = ppPassport.Visa[0].Id,
-		//		Level = ppPassport.Visa[0].Level,
-		//		Name = ppPassport.Visa[0].Name
-		//	};
-		//}
+			// Assert
+			bResult.Should().BeFalse();
+		}
+
+		[Fact]
+		public void TryDisable_ShouldBeTrue_WhenPassportIsEnabledAndIsNotExpired()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+			IPassport ppAuthorizedPassport = DataFaker.Passport.CreateDefault();
+
+			IPassport ppAuthority = DataFaker.Passport.CreateAuthority();
+			DateTimeOffset dtEnabledAt = DataFaker.Passport.LastCheckedAt;
+
+			ppPassport.TryEnable(ppAuthority, dtEnabledAt);
+			ppAuthorizedPassport.TryEnable(ppAuthority, dtEnabledAt);
+
+			// Act
+			DateTimeOffset dtDisabledAt = DataFaker.Passport.LastCheckedAt.AddDays(5);
+
+			bool bResult = ppPassport.TryDisable(ppAuthorizedPassport, dtDisabledAt);
+
+			// Assert
+			ppAuthorizedPassport.IsEnabled.Should().BeTrue();
+			bResult.Should().BeTrue();
+			ppPassport.IsEnabled.Should().BeFalse();
+			ppPassport.LastCheckedAt.Should().Be(dtDisabledAt);
+			ppPassport.LastCheckedBy.Should().Be(ppAuthorizedPassport.Id);
+			ppPassport.IsExpired(dtDisabledAt.AddDays(1));
+		}
+
+		[Fact]
+		public void TryDisable_ShouldBeFalse_WhenPassportIsDisabledAndIsNotExpired()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+			IPassport ppAuthorizedPassport = DataFaker.Passport.CreateDefault();
+
+			IPassport ppAuthority = DataFaker.Passport.CreateAuthority();
+			DateTimeOffset dtEnabledAt = DataFaker.Passport.LastCheckedAt;
+
+			ppPassport.TryEnable(ppAuthority, dtEnabledAt);
+
+			// Act
+			DateTimeOffset dtDisabledAt = DataFaker.Passport.LastCheckedAt.AddDays(5);
+
+			bool bResult = ppPassport.TryDisable(ppAuthorizedPassport, dtDisabledAt);
+
+			// Assert
+			ppAuthorizedPassport.IsEnabled.Should().BeFalse();
+			bResult.Should().BeFalse();
+		}
+
+		[Fact]
+		public void TryDisable_ShouldBeFalse_WhenPassportIsEnabledAndIsExpired()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+			IPassport ppAuthorizedPassport = DataFaker.Passport.CreateDefault();
+
+			IPassport ppAuthority = DataFaker.Passport.CreateAuthority();
+			DateTimeOffset dtEnabledAt = DataFaker.Passport.LastCheckedAt;
+
+			ppPassport.TryEnable(ppAuthority, dtEnabledAt);
+			ppAuthorizedPassport.TryEnable(ppAuthority, dtEnabledAt);
+
+			// Act
+			DateTimeOffset dtDisabledAt = ppPassport.ExpiredAt.AddDays(1);
+
+			bool bResult = ppPassport.TryDisable(ppAuthorizedPassport, dtDisabledAt);
+
+			// Assert
+			ppAuthorizedPassport.IsEnabled.Should().BeTrue();
+			bResult.Should().BeFalse();
+		}
+
+		[Fact]
+		public void TryEnable_ShouldBeTrue_WhenPassportIsEnabledAndAuthorized()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+			IPassport ppAuthority = DataFaker.Passport.CreateAuthority();
+
+			// Act
+			DateTimeOffset dtEnabledAt = DataFaker.Passport.LastCheckedAt.AddDays(1);
+
+			bool bResult = ppPassport.TryEnable(ppAuthority, dtEnabledAt);
+
+			// Assert
+			bResult.Should().BeTrue();
+		}
+
+		[Fact]
+		public void TryEnable_ShouldBeFalse_WhenPassportIsDisabledAndAuthorized()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+			IPassport ppAuthority = DataFaker.Passport.CreateAuthority();
+
+			DateTimeOffset dtDisabledAt = ppAuthority.LastCheckedAt.AddDays(-1);
+			ppAuthority.TryDisable(ppAuthority, dtDisabledAt);
+
+			// Act
+			DateTimeOffset dtEnabledAt = DataFaker.Passport.LastCheckedAt;
+
+			bool bResult = ppPassport.TryEnable(ppAuthority, dtEnabledAt);
+
+			// Assert
+			bResult.Should().BeFalse();
+		}
+
+		[Fact]
+		public void TryEnable_ShouldBeFalse_WhenPassportIsEnabledAndIsNotAuthorized()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+			IPassport ppAuthority = DataFaker.Passport.CreateDefault();
+
+			// Act
+			DateTimeOffset dtEnabledAt = DataFaker.Passport.LastCheckedAt;
+
+			bool bResult = ppPassport.TryEnable(ppAuthority, dtEnabledAt);
+
+			// Assert
+			bResult.Should().BeFalse();
+		}
+
+		[Fact]
+		public void TryExtendTerm_ShouldBeTrue_WhenDateIsLater()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+
+			// Act
+			DateTimeOffset dtExtendedAt = DataFaker.Passport.LastCheckedAt;
+			DateTimeOffset dtDate = ppPassport.ExpiredAt.AddDays(1);
+
+			bool bResult = ppPassport.TryExtendTerm(dtDate, dtExtendedAt, ppPassport.Id);
+
+			// Assert
+			bResult.Should().BeTrue();
+			ppPassport.LastCheckedAt.Should().Be(dtExtendedAt);
+			ppPassport.LastCheckedBy.Should().Be(ppPassport.Id);
+			ppPassport.IsExpired(dtDate).Should().BeTrue();
+		}
+
+		[Fact]
+		public void TryExtendTerm_ShouldBeFalse_WhenDateIsGone()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+
+			// Act
+			DateTimeOffset dtExtendedAt = DataFaker.Passport.LastCheckedAt;
+			DateTimeOffset dtDate = ppPassport.ExpiredAt.AddDays(-1);
+
+			bool bResult = ppPassport.TryExtendTerm(dtDate, dtExtendedAt, ppPassport.Id);
+
+			// Assert
+			bResult.Should().BeFalse();
+		}
+
+		[Fact]
+		public void TryJoinToAuthority_ShouldBeTrue_WhenPassportIsEnabledAndAuthorized()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+			IPassport ppAuthority = DataFaker.Passport.CreateAuthority();
+
+			DateTimeOffset dtEnabledAt = DataFaker.Passport.LastCheckedAt.AddDays(1);
+			ppPassport.TryEnable(ppAuthority, dtEnabledAt);
+
+			// Act
+			DateTimeOffset dtJoinedAt = DataFaker.Passport.LastCheckedAt.AddDays(1);
+
+			bool bResult = ppPassport.TryJoinToAuthority(ppAuthority, dtJoinedAt);
+
+			// Assert
+			bResult.Should().BeTrue();
+			ppPassport.IsAuthority.Should().BeTrue();
+			ppPassport.IsEnabled.Should().BeTrue();
+			ppPassport.LastCheckedAt.Should().Be(dtJoinedAt);
+			ppPassport.LastCheckedBy.Should().Be(ppAuthority.Id);
+		}
+
+		[Fact]
+		public void TryJoinToAuthority_ShouldBeFalse_WhenPassportIsDisabledAndAuthorized()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+			IPassport ppAuthority = DataFaker.Passport.CreateAuthority();
+
+			DateTimeOffset dtDisabledAt = ppAuthority.LastCheckedAt.AddDays(-1);
+			ppAuthority.TryDisable(ppAuthority, dtDisabledAt);
+
+			// Act
+			DateTimeOffset dtJoinedAt = DataFaker.Passport.LastCheckedAt;
+
+			bool bResult = ppPassport.TryJoinToAuthority(ppAuthority, dtJoinedAt);
+
+			// Assert
+			bResult.Should().BeFalse();
+		}
+
+		[Fact]
+		public void TryJoinToAuthority_ShouldBeFalse_WhenPassportIsEnabledAndIsNotAuthorized()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+			IPassport ppAuthority = DataFaker.Passport.CreateDefault();
+
+			// Act
+			DateTimeOffset dtJoinedAt = DataFaker.Passport.LastCheckedAt;
+
+			bool bResult = ppPassport.TryJoinToAuthority(ppAuthority, dtJoinedAt);
+
+			// Assert
+			bResult.Should().BeFalse();
+		}
+
+		[Fact]
+		public void TryJoinToAuthority_ShouldBeFalse_WhenPassportIsDisabled()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+			IPassport ppAuthority = DataFaker.Passport.CreateAuthority();
+
+			// Act
+			DateTimeOffset dtJoinedAt = DataFaker.Passport.LastCheckedAt;
+
+			bool bResult = ppPassport.TryJoinToAuthority(ppAuthority, dtJoinedAt);
+
+			// Assert
+			bResult.Should().BeFalse();
+		}
+
+		[Fact]
+		public void TryJoinToAuthority_ShouldBeFalse_WhenPassportIsExpired()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateDefault();
+			IPassport ppAuthority = DataFaker.Passport.CreateAuthority();
+
+			DateTimeOffset dtEnabledAt = DataFaker.Passport.LastCheckedAt.AddDays(1);
+			ppPassport.TryEnable(ppAuthority, dtEnabledAt);
+
+			// Act
+			DateTimeOffset dtJoinedAt = ppPassport.ExpiredAt.AddDays(1);
+
+			bool bResult = ppPassport.TryJoinToAuthority(ppAuthority, dtJoinedAt);
+
+			// Assert
+			bResult.Should().BeFalse();
+		}
+
+		[Fact]
+		public void TryReset_ShouldBeTrue_WhenPassportIsEnabledAndAuthorized()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateAuthority();
+			IPassport ppAuthority = DataFaker.Passport.CreateAuthority();
+
+			// Act
+			DateTimeOffset dtResetAt = DataFaker.Passport.LastCheckedAt.AddDays(1);
+
+			bool bResult = ppPassport.TryReset(ppAuthority, dtResetAt);
+
+			// Assert
+			bResult.Should().BeTrue();
+			ppPassport.IsAuthority.Should().BeFalse();
+			ppPassport.IsEnabled.Should().BeFalse();
+			ppPassport.LastCheckedAt.Should().Be(dtResetAt);
+			ppPassport.LastCheckedBy.Should().Be(ppAuthority.Id);
+			ppPassport.IsExpired(dtResetAt).Should().BeTrue();
+		}
+
+		[Fact]
+		public void TryReset_ShouldBeFalse_WhenPassportIsDisabledAndAuthorized()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateAuthority();
+			IPassport ppAuthority = DataFaker.Passport.CreateAuthority();
+
+			DateTimeOffset dtDisabledAt = ppAuthority.LastCheckedAt.AddDays(-1);
+			ppAuthority.TryDisable(ppAuthority, dtDisabledAt);
+
+			// Act
+			DateTimeOffset dtResetAt = DataFaker.Passport.LastCheckedAt;
+
+			bool bResult = ppPassport.TryReset(ppAuthority, dtResetAt);
+
+			// Assert
+			bResult.Should().BeFalse();
+		}
+
+		[Fact]
+		public void TryReset_ShouldBeFalse_WhenPassportIsEnabledAndIsNotAuthorized()
+		{
+			// Arrange
+			IPassport ppPassport = DataFaker.Passport.CreateAuthority();
+			IPassport ppAuthority = DataFaker.Passport.CreateDefault();
+
+			// Act
+			DateTimeOffset dtResetAt = DataFaker.Passport.LastCheckedAt;
+
+			bool bResult = ppPassport.TryReset(ppAuthority, dtResetAt);
+
+			// Assert
+			bResult.Should().BeFalse();
+		}
 	}
 }
