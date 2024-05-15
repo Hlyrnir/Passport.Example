@@ -154,6 +154,7 @@ webApplication.AddGenerateTokenByRefreshTokenEndpoint();
 webApplication.AddFindPassportByIdEndpoint();
 webApplication.AddRegisterPassportEndpoint();
 webApplication.AddUpdatePassportEndpoint();
+webApplication.AddSeizePassportEndpoint();
 
 webApplication.AddFindPassportVisaByIdEndpoint();
 webApplication.AddFindPassportVisaByPassportIdEndpoint();
