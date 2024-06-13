@@ -1,12 +1,12 @@
 ﻿using Application.Command.PhysicalData.TimePeriod.Update;
 using Application.Interface.Result;
-using Contract.v01.Request.PhysicalData;
+using Contract.v01.Request.TimePeriod;
 using Mediator;
 using Presentation.Common;
 
 namespace Presentation.Endpoint.PhysicalData
 {
-	public static class UpdateTimePeriodEndpoint
+    public static class UpdateTimePeriodEndpoint
 	{
 		public const string Name = "UpdateTimePeriod";
 

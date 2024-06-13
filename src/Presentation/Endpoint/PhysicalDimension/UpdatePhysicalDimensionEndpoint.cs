@@ -1,12 +1,12 @@
 ﻿using Application.Command.PhysicalData.PhysicalDimension.Update;
 using Application.Interface.Result;
-using Contract.v01.Request.PhysicalData;
+using Contract.v01.Request.PhysicalDimension;
 using Mediator;
 using Presentation.Common;
 
 namespace Presentation.Endpoint.PhysicalData
 {
-	public static class UpdatePhysicalDimensionEndpoint
+    public static class UpdatePhysicalDimensionEndpoint
 	{
 		public const string Name = "UpdatePhysicalDimension";
 

@@ -1,12 +1,12 @@
 ﻿using Application.Interface.Result;
 using Application.Query.PhysicalData.PhysicalDimension.ById;
-using Contract.v01.Response.PhysicalData;
+using Contract.v01.Response.PhysicalDimension;
 using Mediator;
 using Presentation.Common;
 
 namespace Presentation.Endpoint.PhysicalData
 {
-	public static class FindPhysicalDimensionByIdEndpoint
+    public static class FindPhysicalDimensionByIdEndpoint
 	{
 		public const string Name = "FindPhysicalDimensionById";
 

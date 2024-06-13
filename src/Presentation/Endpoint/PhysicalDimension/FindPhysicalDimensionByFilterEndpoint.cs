@@ -2,14 +2,14 @@
 using Application.Interface.Result;
 using Application.Query.PhysicalData.PhysicalDimension.ByFilter;
 using Contract.v01.Request.PhysicalDimension;
-using Contract.v01.Response.PhysicalData;
+using Contract.v01.Response.PhysicalDimension;
 using Domain.Interface.PhysicalData;
 using Mediator;
 using Presentation.Common;
 
 namespace Presentation.Endpoint.PhysicalData
 {
-	public static class FindPhysicalDimensionByFilterEndpoint
+    public static class FindPhysicalDimensionByFilterEndpoint
 	{
 		public const string Name = "FindPhysicalDimensionByFilter";
 

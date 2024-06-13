@@ -1,7 +1,7 @@
 ﻿using Application.Filter;
 using Application.Interface.Result;
 using Application.Query.PhysicalData.TimePeriod.ByFilter;
-using Contract.v01.Request.PhysicalDimension;
+using Contract.v01.Request.TimePeriod;
 using Contract.v01.Response.TimePeriod;
 using Domain.Interface.PhysicalData;
 using Mediator;
@@ -9,7 +9,7 @@ using Presentation.Common;
 
 namespace Presentation.Endpoint.PhysicalData
 {
-	public static class FindTimePeriodByFilterEndpoint
+    public static class FindTimePeriodByFilterEndpoint
 	{
 		public const string Name = "FindTimePeriodByFilter";
 

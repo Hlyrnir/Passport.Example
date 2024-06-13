@@ -10,7 +10,7 @@ namespace Application.Common.Result.Repository
         /// <value>
         /// The code for this error.
         /// </value>
-        public string Code { get; init; }
+        public required string Code { get; init; }
 
         /// <summary>
         /// Gets or sets the description for this error.
@@ -18,6 +18,6 @@ namespace Application.Common.Result.Repository
         /// <value>
         /// The description for this error.
         /// </value>
-        public string Description { get; init; }
+        public required string Description { get; init; }
     }
 }

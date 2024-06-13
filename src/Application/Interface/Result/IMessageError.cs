@@ -2,7 +2,7 @@
 {
 	public interface IMessageError
 	{
-		string? Code { get; init; }
-		string? Description { get; init; }
+		string Code { get; init; }
+		string Description { get; init; }
 	}
 }

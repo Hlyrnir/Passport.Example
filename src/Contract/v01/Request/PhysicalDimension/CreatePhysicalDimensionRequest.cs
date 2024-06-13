@@ -1,4 +1,4 @@
-﻿namespace Contract.v01.Request.PhysicalData
+﻿namespace Contract.v01.Request.PhysicalDimension
 {
     public sealed class CreatePhysicalDimensionRequest
     {

@@ -1,13 +1,13 @@
 ﻿using Application.Command.PhysicalData.PhysicalDimension.Create;
 using Application.Interface.Result;
-using Contract.v01.Request.PhysicalData;
-using Contract.v01.Response.PhysicalData;
+using Contract.v01.Request.PhysicalDimension;
+using Contract.v01.Response.PhysicalDimension;
 using Mediator;
 using Presentation.Common;
 
 namespace Presentation.Endpoint.PhysicalData
 {
-	public static class CreatePhysicalDimensionEndpoint
+    public static class CreatePhysicalDimensionEndpoint
 	{
 		public const string Name = "CreatePhysicalDimension";
 

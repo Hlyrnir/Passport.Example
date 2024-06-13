@@ -2,8 +2,6 @@
 
 namespace Application.Common.Result.Message
 {
-    // see Microsoft.AspNetCore.Identity.IdentityError
-
     public readonly struct MessageError : IMessageError
     {
         /// <summary>
@@ -12,7 +10,7 @@ namespace Application.Common.Result.Message
         /// <value>
         /// The code for this error.
         /// </value>
-        public string? Code { get; init; }
+        public required string Code { get; init; }
 
         /// <summary>
         /// Gets or sets the description for this error.
@@ -20,13 +18,6 @@ namespace Application.Common.Result.Message
         /// <value>
         /// The description for this error.
         /// </value>
-        public string? Description { get; init; }
-
-        // Types of message errors
-        // Failure
-        // Unexpected
-        // Validation
-        // Conflict
-        // NotFound
+        public required string Description { get; init; }
     }
 }

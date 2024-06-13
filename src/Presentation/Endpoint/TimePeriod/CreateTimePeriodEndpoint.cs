@@ -1,13 +1,13 @@
 ﻿using Application.Command.PhysicalData.TimePeriod.Create;
 using Application.Interface.Result;
-using Contract.v01.Request.PhysicalData;
+using Contract.v01.Request.TimePeriod;
 using Contract.v01.Response.TimePeriod;
 using Mediator;
 using Presentation.Common;
 
 namespace Presentation.Endpoint.PhysicalData
 {
-	public static class CreateTimePeriodEndpoint
+    public static class CreateTimePeriodEndpoint
 	{
 		public const string Name = "CreateTimePeriod";
 
