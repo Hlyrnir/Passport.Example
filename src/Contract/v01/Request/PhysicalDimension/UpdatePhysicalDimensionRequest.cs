@@ -3,6 +3,7 @@
     public sealed class UpdatePhysicalDimensionRequest
     {
         public required Guid PhysicalDimensionId { get; init; }
+        public required string ConcurrencyStamp { get; init; }
         public required double ConversionFactorToSI { get; init; }
         public required string CultureName { get; init; }
         public required string Name { get; init; }

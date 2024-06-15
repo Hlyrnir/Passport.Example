@@ -44,14 +44,15 @@ namespace Presentation.Endpoint.Authorization.PassportVisa
 				bResult => TypedResults.Ok(bResult));
 		}
 
-		private static UpdatePassportVisaCommand MapToCommand(this UpdatePassportVisaRequest cmdRequest, Guid guPassportId)
+		private static UpdatePassportVisaCommand MapToCommand(this UpdatePassportVisaRequest rqstPassportVisa, Guid guPassportId)
 		{
 			return new UpdatePassportVisaCommand()
 			{
 				RestrictedPassportId = guPassportId,
-				PassportVisaId = cmdRequest.Id,
-				Name = cmdRequest.Name,
-				Level = cmdRequest.Level
+				PassportVisaId = rqstPassportVisa.Id,
+				ConcurrencyStamp = rqstPassportVisa.ConcurrencyStamp,
+				Name = rqstPassportVisa.Name,
+				Level = rqstPassportVisa.Level
 			};
 		}
 	}

@@ -6,9 +6,10 @@ namespace Application.Error
 	internal static class DefaultMessageError
 	{
 		public static IMessageError TaskAborted => new MessageError() { Code = "METHOD_APPLICATION", Description = "Task has been cancelled." };
-	}
+		public static IMessageError ConcurrencyViolation => new MessageError() { Code = "METHOD_APPLICATION", Description = "Data has been modified. Refresh and try again." };
+    }
 
-	internal static class AuthorizationError
+    internal static class AuthorizationError
 	{
 		internal static class Code
 		{

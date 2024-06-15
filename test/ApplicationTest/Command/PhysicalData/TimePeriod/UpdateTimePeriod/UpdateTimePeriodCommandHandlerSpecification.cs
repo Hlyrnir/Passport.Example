@@ -4,7 +4,6 @@ using Application.Interface.Result;
 using Application.Interface.Time;
 using ApplicationTest.Common;
 using ApplicationTest.Error;
-using Domain.Interface.Authorization;
 using Domain.Interface.PhysicalData;
 using DomainFaker;
 using FluentAssertions;
@@ -35,11 +34,12 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 
 			UpdateTimePeriodCommand cmdUpdate = new UpdateTimePeriodCommand()
 			{
+				ConcurrencyStamp = pdTimePeriod.ConcurrencyStamp,
 				Magnitude = new double[] { 0.0 },
 				Offset = 0.0,
 				PhysicalDimensionId = pdPhysicalDimension.Id,
 				RestrictedPassportId = Guid.Empty,
-				TimePeriodId = pdTimePeriod.Id,
+				TimePeriodId = pdTimePeriod.Id
 			};
 
 			UpdateTimePeriodCommandHandler cmdHandler = new UpdateTimePeriodCommandHandler(
@@ -79,11 +79,12 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 
 			UpdateTimePeriodCommand cmdUpdate = new UpdateTimePeriodCommand()
 			{
+				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				Magnitude = new double[] { 0.0 },
 				Offset = 0.0,
 				PhysicalDimensionId = pdPhysicalDimension.Id,
 				RestrictedPassportId = Guid.Empty,
-				TimePeriodId = Guid.NewGuid(),
+				TimePeriodId = Guid.NewGuid()
 			};
 
 			// Act
@@ -101,6 +102,7 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 					msgError.Should().NotBeNull();
 					msgError.Code.Should().Be(TestError.Repository.TimePeriod.NotFound.Code);
 					msgError.Description.Should().Be(TestError.Repository.TimePeriod.NotFound.Description);
+
 					return false;
 				},
 				bResult =>
@@ -114,7 +116,58 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 			await fxtPhysicalData.PhysicalDimensionRepository.DeleteAsync(pdPhysicalDimension, CancellationToken.None);
 		}
 
-		[Fact]
+        [Fact]
+        public async Task Update_ShouldReturnRepositoryError_WhenConcurrencyStampDoNotMatch()
+        {
+            // Arrange
+            IPhysicalDimension pdPhysicalDimension = DataFaker.PhysicalDimension.CreateTimeDefault();
+            await fxtPhysicalData.PhysicalDimensionRepository.InsertAsync(pdPhysicalDimension, prvTime.GetUtcNow(), CancellationToken.None);
+
+            ITimePeriod pdTimePeriod = DataFaker.TimePeriod.CreateDefault(pdPhysicalDimension);
+            await fxtPhysicalData.TimePeriodRepository.InsertAsync(pdTimePeriod, prvTime.GetUtcNow(), CancellationToken.None);
+
+            string sObsoleteConcurrencyStamp = Guid.NewGuid().ToString();
+
+            UpdateTimePeriodCommand cmdUpdate = new UpdateTimePeriodCommand()
+            {
+                ConcurrencyStamp = sObsoleteConcurrencyStamp,
+                Magnitude = new double[] { 0.0 },
+                Offset = 0.0,
+                PhysicalDimensionId = pdPhysicalDimension.Id,
+                RestrictedPassportId = Guid.Empty,
+                TimePeriodId = pdTimePeriod.Id
+            };
+
+            UpdateTimePeriodCommandHandler cmdHandler = new UpdateTimePeriodCommandHandler(
+                prvTime: prvTime,
+                repoPhysicalDimension: fxtPhysicalData.PhysicalDimensionRepository,
+                repoTimePeriod: fxtPhysicalData.TimePeriodRepository);
+
+            // Act
+            IMessageResult<bool> rsltUpdate = await cmdHandler.Handle(cmdUpdate, CancellationToken.None);
+
+            // Assert
+            rsltUpdate.Match(
+                msgError =>
+                {
+                    msgError.Should().NotBeNull();
+                    msgError.Should().Be(DefaultMessageError.ConcurrencyViolation);
+
+                    return false;
+                },
+                bResult =>
+                {
+                    bResult.Should().BeFalse();
+
+                    return false;
+                });
+
+            // Clean up
+            await fxtPhysicalData.TimePeriodRepository.DeleteAsync(pdTimePeriod, CancellationToken.None);
+            await fxtPhysicalData.PhysicalDimensionRepository.DeleteAsync(pdPhysicalDimension, CancellationToken.None);
+        }
+
+        [Fact]
 		public async Task Update_ShouldReturnRepositoryError_WhenTimePeriodIsNotUpdated()
 		{
 			// Arrange
@@ -129,11 +182,12 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 
 			UpdateTimePeriodCommand cmdUpdate = new UpdateTimePeriodCommand()
 			{
+				ConcurrencyStamp = pdTimePeriod.ConcurrencyStamp,
 				Magnitude = new double[] { 0.0 },
 				Offset = 0.0,
 				PhysicalDimensionId = pdInvalidPhysicalDimension.Id,
 				RestrictedPassportId = Guid.Empty,
-				TimePeriodId = pdTimePeriod.Id,
+				TimePeriodId = pdTimePeriod.Id
 			};
 
 			// Act
@@ -151,6 +205,7 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 					msgError.Should().NotBeNull();
 					msgError.Code.Should().Be(DomainError.Code.Method);
 					msgError.Description.Should().Be("Physical dimension could not be changed.");
+
 					return false;
 				},
 				bResult =>

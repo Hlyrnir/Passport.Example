@@ -4,7 +4,6 @@ using Application.Interface.Result;
 using Application.Interface.Time;
 using Application.Interface.Validation;
 using ApplicationTest.Common;
-using ApplicationTest.Error;
 using Domain.Interface.PhysicalData;
 using DomainFaker;
 using FluentAssertions;
@@ -35,11 +34,12 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 
 			UpdateTimePeriodCommand cmdUpdate = new UpdateTimePeriodCommand()
 			{
+				ConcurrencyStamp = pdTimePeriod.ConcurrencyStamp,
 				Magnitude = new double[] { 0.0 },
 				Offset = 0.0,
 				PhysicalDimensionId = pdPhysicalDimension.Id,
 				RestrictedPassportId = Guid.Empty,
-				TimePeriodId = pdTimePeriod.Id,
+				TimePeriodId = pdTimePeriod.Id
 			};
 
 			IValidation<UpdateTimePeriodCommand> hndlValidation = new UpdateTimePeriodValidation(
@@ -78,11 +78,12 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 			// Arrange
 			UpdateTimePeriodCommand cmdUpdate = new UpdateTimePeriodCommand()
 			{
+				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				Magnitude = new double[] { 0.0 },
 				Offset = 0.0,
 				PhysicalDimensionId = Guid.NewGuid(),
 				RestrictedPassportId = Guid.Empty,
-				TimePeriodId = Guid.NewGuid(),
+				TimePeriodId = Guid.NewGuid()
 			};
 
 			IValidation<UpdateTimePeriodCommand> hndlValidation = new UpdateTimePeriodValidation(
@@ -129,11 +130,12 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 
 			UpdateTimePeriodCommand cmdUpdate = new UpdateTimePeriodCommand()
 			{
+				ConcurrencyStamp = pdTimePeriod.ConcurrencyStamp,
 				Magnitude = new double[] { 0.0 },
 				Offset = dOffset,
 				PhysicalDimensionId = pdPhysicalDimension.Id,
 				RestrictedPassportId = Guid.Empty,
-				TimePeriodId = pdTimePeriod.Id,
+				TimePeriodId = pdTimePeriod.Id
 			};
 
 			IValidation<UpdateTimePeriodCommand> hndlValidation = new UpdateTimePeriodValidation(

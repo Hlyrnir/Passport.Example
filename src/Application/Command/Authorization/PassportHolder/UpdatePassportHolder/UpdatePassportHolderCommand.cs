@@ -8,7 +8,8 @@ namespace Application.Command.Authorization.PassportHolder.UpdatePassportHolder
 	{
 		public required Guid RestrictedPassportId { get; init; }
 
-		public required Guid PassportHolderId { get; init; }
+        public required string ConcurrencyStamp { get; init; }
+        public required Guid PassportHolderId { get; init; }
 		public required string CultureName { get; init; }
 		public required string EmailAddress { get; init; }
 		public required string FirstName { get; init; }

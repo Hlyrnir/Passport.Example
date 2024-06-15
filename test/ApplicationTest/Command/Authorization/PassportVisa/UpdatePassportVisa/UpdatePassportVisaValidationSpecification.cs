@@ -11,7 +11,7 @@ using Xunit;
 
 namespace ApplicationTest.Command.Authorization.PassportVisa.UpdatePassportVisa
 {
-	public sealed class UpdatePassportVisaValidationSpecification : IClassFixture<PassportFixture>
+    public sealed class UpdatePassportVisaValidationSpecification : IClassFixture<PassportFixture>
     {
         private readonly PassportFixture fxtAuthorizationData;
         private readonly ITimeProvider prvTime;
@@ -31,6 +31,7 @@ namespace ApplicationTest.Command.Authorization.PassportVisa.UpdatePassportVisa
 
             UpdatePassportVisaCommand cmdDelete = new UpdatePassportVisaCommand()
             {
+                ConcurrencyStamp = ppVisa.ConcurrencyStamp,
                 Level = 0,
                 Name = Guid.NewGuid().ToString(),
                 PassportVisaId = ppVisa.Id,
@@ -72,6 +73,7 @@ namespace ApplicationTest.Command.Authorization.PassportVisa.UpdatePassportVisa
             // Arrange
             UpdatePassportVisaCommand cmdDelete = new UpdatePassportVisaCommand()
             {
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
                 Level = 0,
                 Name = Guid.NewGuid().ToString(),
                 PassportVisaId = Guid.NewGuid(),
@@ -117,6 +119,7 @@ namespace ApplicationTest.Command.Authorization.PassportVisa.UpdatePassportVisa
 
             UpdatePassportVisaCommand cmdUpdate = new UpdatePassportVisaCommand()
             {
+                ConcurrencyStamp = ppVisa.ConcurrencyStamp,
                 Level = iLevel,
                 Name = Guid.NewGuid().ToString(),
                 PassportVisaId = ppVisa.Id,
@@ -163,6 +166,7 @@ namespace ApplicationTest.Command.Authorization.PassportVisa.UpdatePassportVisa
 
             UpdatePassportVisaCommand cmdUpdate = new UpdatePassportVisaCommand()
             {
+                ConcurrencyStamp = ppVisa.ConcurrencyStamp,
                 Level = iLevel,
                 Name = Guid.NewGuid().ToString(),
                 PassportVisaId = ppVisa.Id,
@@ -211,6 +215,7 @@ namespace ApplicationTest.Command.Authorization.PassportVisa.UpdatePassportVisa
 
             UpdatePassportVisaCommand cmdUpdate = new UpdatePassportVisaCommand()
             {
+                ConcurrencyStamp = ppVisa.ConcurrencyStamp,
                 Level = 0,
                 Name = sName,
                 PassportVisaId = ppVisa.Id,
@@ -257,6 +262,7 @@ namespace ApplicationTest.Command.Authorization.PassportVisa.UpdatePassportVisa
 
             UpdatePassportVisaCommand cmdUpdate = new UpdatePassportVisaCommand()
             {
+                ConcurrencyStamp = ppVisa.ConcurrencyStamp,
                 Level = 0,
                 Name = sName,
                 PassportVisaId = ppVisa.Id,

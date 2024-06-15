@@ -9,7 +9,7 @@ using Presentation.Common;
 
 namespace Presentation.Endpoint.PhysicalData
 {
-    public static class FindTimePeriodByFilterEndpoint
+	public static class FindTimePeriodByFilterEndpoint
 	{
 		public const string Name = "FindTimePeriodByFilter";
 
@@ -45,7 +45,7 @@ namespace Presentation.Endpoint.PhysicalData
 			return mdtResult.Match(
 				msgError => Results.BadRequest($"{msgError.Code}: {msgError.Description}"),
 				rsltTimePeriod => TypedResults.Ok(rsltTimePeriod.MapToResponse(
-					qryFindByFilter.Filter.Page, 
+					qryFindByFilter.Filter.Page,
 					qryFindByFilter.Filter.PageSize)));
 		}
 
@@ -81,6 +81,7 @@ namespace Presentation.Endpoint.PhysicalData
 			{
 				yield return new TimePeriodByIdResponse()
 				{
+					ConcurrencyStamp = pdTimePeriod.ConcurrencyStamp,
 					Id = pdTimePeriod.Id,
 					Magnitude = pdTimePeriod.Magnitude,
 					Offset = pdTimePeriod.Offset,

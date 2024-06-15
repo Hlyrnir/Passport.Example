@@ -37,12 +37,11 @@ namespace Presentation.Endpoint.Authorization.Passport
 
 			UpdatePassportCommand cmdUpdate = rqstPassport.MapToCommand(guPassportId);
 
-			// IPassport?
 			IMessageResult<bool> mdtResult = await mdtMediator.Send(cmdUpdate, tknCancellation);
 
 			return mdtResult.Match(
 				msgError => Results.BadRequest($"{msgError.Code}: {msgError.Description}"),
-				bResult => TypedResults.Ok(bResult)); //pdPhysicalDimension => TypedResults.Ok(pdPhysicalDimension.MapToResponse()));
+				bResult => TypedResults.Ok(bResult));
 		}
 
 		private static UpdatePassportCommand MapToCommand(this UpdatePassportRequest cmdRequest, Guid guPassportId)
@@ -51,6 +50,7 @@ namespace Presentation.Endpoint.Authorization.Passport
 			{
 				RestrictedPassportId = guPassportId,
 				PassportIdToUpdate = cmdRequest.PassportId,
+				ConcurrencyStamp = cmdRequest.ConcurrencyStamp,
 				ExpiredAt = cmdRequest.ExpiredAt,
 				IsAuthority = cmdRequest.IsAuthority,
 				IsEnabled = cmdRequest.IsEnabled,

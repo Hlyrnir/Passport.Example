@@ -8,7 +8,8 @@ namespace Application.Command.Authorization.Passport.UpdatePassport
 	{
 		public required Guid RestrictedPassportId { get; init; }
 
-		public required Guid PassportIdToUpdate { get; init; }
+        public required string ConcurrencyStamp { get; init; }
+        public required Guid PassportIdToUpdate { get; init; }
 		public required DateTimeOffset ExpiredAt { get; init; }
 		public required bool IsEnabled { get; init; }
 		public required bool IsAuthority { get; init; }

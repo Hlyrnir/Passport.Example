@@ -8,7 +8,8 @@ namespace Application.Command.Authorization.PassportHolder.ConfirmEmailAddress
 	{
 		public required Guid RestrictedPassportId { get; init; }
 
-		public required Guid PassportHolderId { get; init; }
+        public required string ConcurrencyStamp { get; init; }
+        public required Guid PassportHolderId { get; init; }
 		public required string EmailAddress { get; init; }
 	}
 }

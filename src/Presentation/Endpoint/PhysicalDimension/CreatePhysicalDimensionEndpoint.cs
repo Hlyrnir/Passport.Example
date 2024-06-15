@@ -42,11 +42,7 @@ namespace Presentation.Endpoint.PhysicalData
 
 			return mdtResult.Match(
 				msgError => Results.BadRequest($"{msgError.Code}: {msgError.Description}"),
-				guPhysicalDimensionId =>
-				{
-					PhysicalDimensionByIdResponse rspsPhysicalDimension = cmdInsert.MapToResponse(guPhysicalDimensionId);
-					return TypedResults.CreatedAtRoute(rspsPhysicalDimension, FindPhysicalDimensionByIdEndpoint.Name, new { guId = guPhysicalDimensionId });
-				});
+				guPhysicalDimensionId => TypedResults.CreatedAtRoute(FindPhysicalDimensionByIdEndpoint.Name, new { guId = guPhysicalDimensionId }));
 		}
 
 		private static CreatePhysicalDimensionCommand MapToCommand(this CreatePhysicalDimensionRequest cmdRequest, Guid guPassportId)
@@ -66,26 +62,6 @@ namespace Presentation.Endpoint.PhysicalData
 				Name = cmdRequest.Name,
 				Symbol = cmdRequest.Symbol,
 				Unit = cmdRequest.Unit
-			};
-		}
-
-		private static PhysicalDimensionByIdResponse MapToResponse(this CreatePhysicalDimensionCommand cmdCreate, Guid guPhysicalDimensionId)
-		{
-			return new PhysicalDimensionByIdResponse()
-			{
-				ConversionFactorToSI = cmdCreate.ConversionFactorToSI,
-				CultureName = cmdCreate.CultureName,
-				ExponentOfAmpere = cmdCreate.ExponentOfAmpere,
-				ExponentOfCandela = cmdCreate.ExponentOfCandela,
-				ExponentOfKelvin = cmdCreate.ExponentOfKelvin,
-				ExponentOfKilogram = cmdCreate.ExponentOfKilogram,
-				ExponentOfMetre = cmdCreate.ExponentOfMetre,
-				ExponentOfMole = cmdCreate.ExponentOfMole,
-				ExponentOfSecond = cmdCreate.ExponentOfSecond,
-				Id = guPhysicalDimensionId,
-				Name = cmdCreate.Name,
-				Symbol = cmdCreate.Symbol,
-				Unit = cmdCreate.Unit
 			};
 		}
 	}

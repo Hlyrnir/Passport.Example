@@ -57,6 +57,7 @@ namespace Presentation.Endpoint.PhysicalData
 		{
 			return new TimePeriodByIdResponse()
 			{
+				ConcurrencyStamp = rsltTimePeriod.TimePeriod.ConcurrencyStamp,
 				Id = rsltTimePeriod.TimePeriod.Id,
 				Magnitude = rsltTimePeriod.TimePeriod.Magnitude,
 				Offset = rsltTimePeriod.TimePeriod.Offset,

@@ -85,6 +85,7 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.DeleteTimePeriod
 					msgError.Should().NotBeNull();
 					msgError.Code.Should().Be(TestError.Repository.TimePeriod.NotFound.Code);
 					msgError.Description.Should().Be(TestError.Repository.TimePeriod.NotFound.Description);
+
 					return false;
 				},
 				bResult =>

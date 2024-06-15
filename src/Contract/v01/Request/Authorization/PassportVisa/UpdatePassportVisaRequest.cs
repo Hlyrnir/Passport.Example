@@ -3,7 +3,8 @@
 	public class UpdatePassportVisaRequest
 	{
 		public required Guid Id { get; init; }
-		public required string Name { get; init; }
+        public required string ConcurrencyStamp { get; init; }
+        public required string Name { get; init; }
 		public required int Level { get; init; }
 	}
 }

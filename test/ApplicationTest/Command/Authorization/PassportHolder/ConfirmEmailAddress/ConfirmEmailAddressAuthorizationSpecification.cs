@@ -42,6 +42,7 @@ namespace ApplicationTest.Command.Authorization.PassportHolder.ConfirmEmailAddre
 
 			ConfirmEmailAddressCommand cmdUpdate = new ConfirmEmailAddressCommand()
 			{
+				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				EmailAddress = $"{Guid.NewGuid()}@passport.org",
 				PassportHolderId = Guid.NewGuid(),
 				RestrictedPassportId = ppPassport.Id
@@ -95,6 +96,7 @@ namespace ApplicationTest.Command.Authorization.PassportHolder.ConfirmEmailAddre
 
 			ConfirmEmailAddressCommand cmdUpdate = new ConfirmEmailAddressCommand()
 			{
+				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				EmailAddress = $"{Guid.NewGuid()}@passport.org",
 				PassportHolderId = Guid.NewGuid(),
 				RestrictedPassportId = ppPassport.Id

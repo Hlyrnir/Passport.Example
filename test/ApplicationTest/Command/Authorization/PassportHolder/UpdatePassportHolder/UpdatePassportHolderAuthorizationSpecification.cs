@@ -42,6 +42,7 @@ namespace ApplicationTest.Command.Authorization.PassportHolder.UpdatePassportHol
 
 			UpdatePassportHolderCommand cmdUpdate = new UpdatePassportHolderCommand()
 			{
+				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				CultureName = "en-GB",
 				EmailAddress = "default@ema.il",
 				FirstName = "Jane",
@@ -99,6 +100,7 @@ namespace ApplicationTest.Command.Authorization.PassportHolder.UpdatePassportHol
 
 			UpdatePassportHolderCommand cmdUpdate = new UpdatePassportHolderCommand()
 			{
+				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				CultureName = "en-GB",
 				EmailAddress = "default@ema.il",
 				FirstName = "Jane",

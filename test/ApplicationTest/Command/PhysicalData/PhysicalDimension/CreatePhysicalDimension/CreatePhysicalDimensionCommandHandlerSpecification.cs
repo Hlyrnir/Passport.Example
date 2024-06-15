@@ -4,7 +4,6 @@ using Application.Interface.Time;
 using ApplicationTest.Common;
 using ApplicationTest.Error;
 using Domain.Interface.PhysicalData;
-using DomainFaker;
 using FluentAssertions;
 using Xunit;
 
@@ -25,9 +24,6 @@ namespace ApplicationTest.Command.PhysicalData.PhysicalDimension.CreatePhysicalD
 		public async Task Create_ShouldReturnTrue_WhenPhysicalDimensionIsCreated()
 		{
 			// Arrange
-			IPhysicalDimension pdPhysicalDimension = DataFaker.PhysicalDimension.CreateTimeDefault();
-			await fxtPhysicalData.PhysicalDimensionRepository.InsertAsync(pdPhysicalDimension, prvTime.GetUtcNow(), CancellationToken.None);
-
 			CreatePhysicalDimensionCommand cmdCreate = new CreatePhysicalDimensionCommand()
 			{
 				ExponentOfAmpere = 0,
@@ -97,50 +93,5 @@ namespace ApplicationTest.Command.PhysicalData.PhysicalDimension.CreatePhysicalD
 					return true;
 				});
 		}
-
-		//[Fact]
-		//public async Task Create_ShouldReturnRepositoryError_WhenPhysicalDimensionDoesNotExist()
-		//{
-		//	// Arrange
-		//	CreatePhysicalDimensionCommand cmdCreate = new CreatePhysicalDimensionCommand()
-		//	{
-		//		ExponentOfAmpere = 0,
-		//		ExponentOfCandela = 0,
-		//		ExponentOfKelvin = 0,
-		//		ExponentOfKilogram = 0,
-		//		ExponentOfMetre = 1,
-		//		ExponentOfMole = 0,
-		//		ExponentOfSecond = 0,
-		//		ConversionFactorToSI = 1,
-		//		CultureName = "en-GB",
-		//		Name = "Metre",
-		//		Symbol = "l",
-		//		Unit = "m",
-		//		RestrictedPassportId = Guid.Empty
-		//	};
-
-		//	// Act
-		//	CreatePhysicalDimensionCommandHandler cmdHandler = new CreatePhysicalDimensionCommandHandler(
-		//		prvTime: prvTime,
-		//		repoPhysicalDimension: fxtPhysicalData.PhysicalDimensionRepository);
-
-		//	IMessageResult<Guid> rsltPhysicalDimensionId = await cmdHandler.Handle(cmdCreate, CancellationToken.None);
-
-		//	// Assert
-		//	rsltPhysicalDimensionId.Match(
-		//		msgError =>
-		//		{
-		//			msgError.Should().NotBeNull();
-		//			msgError.Code.Should().Be(TestError.Repository.PhysicalDimension.NotFound.Code);
-		//			msgError.Description.Should().Be(TestError.Repository.PhysicalDimension.NotFound.Description);
-		//			return false;
-		//		},
-		//		guPhysicalDimensionId =>
-		//		{
-		//			guPhysicalDimensionId.Should().BeEmpty();
-
-		//			return true;
-		//		});
-		//}
-	}
+    }
 }

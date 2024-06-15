@@ -42,6 +42,7 @@ namespace ApplicationTest.Command.Authorization.PassportHolder.ConfirmPhoneNumbe
 
 			ConfirmPhoneNumberCommand cmdUpdate = new ConfirmPhoneNumberCommand()
 			{
+				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				PassportHolderId = Guid.NewGuid(),
 				PhoneNumber = "111",
 				RestrictedPassportId = ppPassport.Id
@@ -95,6 +96,7 @@ namespace ApplicationTest.Command.Authorization.PassportHolder.ConfirmPhoneNumbe
 
 			ConfirmPhoneNumberCommand cmdUpdate = new ConfirmPhoneNumberCommand()
 			{
+				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				PassportHolderId = Guid.NewGuid(),
 				PhoneNumber = "111",
 				RestrictedPassportId = ppPassport.Id

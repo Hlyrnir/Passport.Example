@@ -8,7 +8,8 @@ namespace Application.Command.Authorization.PassportHolder.ConfirmPhoneNumber
 	{
 		public required Guid RestrictedPassportId { get; init; }
 
-		public required Guid PassportHolderId { get; init; }
+        public required string ConcurrencyStamp { get; init; }
+        public required Guid PassportHolderId { get; init; }
 		public required string PhoneNumber { get; init; }
 	}
 }

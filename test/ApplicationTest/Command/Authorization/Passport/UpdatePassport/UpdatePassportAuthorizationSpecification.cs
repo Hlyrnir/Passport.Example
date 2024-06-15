@@ -42,6 +42,7 @@ namespace ApplicationTest.Command.Authorization.Passport.UpdatePassport
 
             UpdatePassportCommand cmdUpdate = new UpdatePassportCommand()
             {
+                ConcurrencyStamp = ppPassport.ConcurrencyStamp,
                 ExpiredAt = prvTime.GetUtcNow().AddDays(30),
                 IsAuthority = false,
                 IsEnabled = false,
@@ -100,6 +101,7 @@ namespace ApplicationTest.Command.Authorization.Passport.UpdatePassport
 
             UpdatePassportCommand cmdUpdate = new UpdatePassportCommand()
             {
+                ConcurrencyStamp = ppPassport.ConcurrencyStamp,
                 ExpiredAt = prvTime.GetUtcNow().AddDays(30),
                 IsAuthority = false,
                 IsEnabled = false,

@@ -34,6 +34,7 @@ namespace ApplicationTest.Command.Authorization.Passport.UpdatePassport
 
             UpdatePassportCommand cmdUpdate = new UpdatePassportCommand()
             {
+                ConcurrencyStamp = ppPassport.ConcurrencyStamp,
                 ExpiredAt = ppPassport.ExpiredAt.AddDays(1),
                 IsAuthority = ppPassport.IsAuthority,
                 IsEnabled = ppPassport.IsEnabled,
@@ -86,6 +87,60 @@ namespace ApplicationTest.Command.Authorization.Passport.UpdatePassport
         }
 
         [Fact]
+        public async Task Update_ShouldReturnRepositoryError_WhenConcurrencyDoNotMatch()
+        {
+            // Arrange
+            IPassport ppAuthority = DataFaker.Passport.CreateAuthority();
+
+            IPassport ppPassport = DataFaker.Passport.CreateDefault();
+            ppPassport.TryEnable(ppAuthority, prvTime.GetUtcNow());
+            ppPassport.TryJoinToAuthority(ppAuthority, prvTime.GetUtcNow());
+            await fxtAuthorizationData.PassportRepository.InsertAsync(ppPassport, prvTime.GetUtcNow(), CancellationToken.None);
+
+            string sObsoleteConcurrencyStamp = Guid.NewGuid().ToString();
+
+            UpdatePassportCommand cmdUpdate = new UpdatePassportCommand()
+            {
+                ConcurrencyStamp = sObsoleteConcurrencyStamp,
+                ExpiredAt = ppPassport.ExpiredAt.AddDays(1),
+                IsAuthority = ppPassport.IsAuthority,
+                IsEnabled = ppPassport.IsEnabled,
+                LastCheckedAt = prvTime.GetUtcNow(),
+                LastCheckedBy = Guid.NewGuid(),
+                PassportIdToUpdate = ppPassport.Id,
+                PassportVisaId = ppPassport.VisaId,
+                RestrictedPassportId = ppPassport.Id
+            };
+
+            UpdatePassportCommandHandler hdlCommand = new UpdatePassportCommandHandler(
+                prvTime: prvTime,
+                repoPassport: fxtAuthorizationData.PassportRepository,
+                repoVisa: fxtAuthorizationData.PassportVisaRepository);
+
+            // Act
+            IMessageResult<bool> rsltUpdate = await hdlCommand.Handle(cmdUpdate, CancellationToken.None);
+
+            //Assert
+            rsltUpdate.Match(
+                msgError =>
+                {
+                    msgError.Should().NotBeNull();
+                    msgError.Should().Be(DefaultMessageError.ConcurrencyViolation);
+
+                    return false;
+                },
+                bResult =>
+                {
+                    bResult.Should().BeFalse();
+
+                    return false;
+                });
+
+            //Clean up
+            await fxtAuthorizationData.PassportRepository.DeleteAsync(ppPassport, CancellationToken.None);
+        }
+
+        [Fact]
         public async Task Update_ShouldReturnMessageError_WhenTryToEnablePassportWithoutAuthorization()
         {
             // Arrange
@@ -94,6 +149,7 @@ namespace ApplicationTest.Command.Authorization.Passport.UpdatePassport
 
             UpdatePassportCommand cmdUpdate = new UpdatePassportCommand()
             {
+                ConcurrencyStamp = ppPassport.ConcurrencyStamp,
                 ExpiredAt = ppPassport.ExpiredAt.AddDays(1),
                 IsAuthority = ppPassport.IsAuthority,
                 IsEnabled = true,
@@ -146,6 +202,7 @@ namespace ApplicationTest.Command.Authorization.Passport.UpdatePassport
 
             UpdatePassportCommand cmdUpdate = new UpdatePassportCommand()
             {
+                ConcurrencyStamp = ppPassport.ConcurrencyStamp,
                 ExpiredAt = ppPassport.ExpiredAt.AddDays(1),
                 IsAuthority = true,
                 IsEnabled = ppPassport.IsEnabled,

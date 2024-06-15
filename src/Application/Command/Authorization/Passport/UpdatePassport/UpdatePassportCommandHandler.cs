@@ -35,6 +35,9 @@ namespace Application.Command.Authorization.Passport.UpdatePassport
 				msgError => new MessageResult<bool>(new MessageError() { Code = msgError.Code, Description = msgError.Description }),
 				async ppPassport =>
 				{
+					if (ppPassport.ConcurrencyStamp != msgMessage.ConcurrencyStamp)
+						return new MessageResult<bool>(DefaultMessageError.ConcurrencyViolation);
+
 					if (msgMessage.IsAuthority == true || msgMessage.IsEnabled == true)
 					{
 						IRepositoryResult<IPassport> rsltAuthorizedPassport = await repoPassport.FindByIdAsync(msgMessage.RestrictedPassportId, tknCancellation);

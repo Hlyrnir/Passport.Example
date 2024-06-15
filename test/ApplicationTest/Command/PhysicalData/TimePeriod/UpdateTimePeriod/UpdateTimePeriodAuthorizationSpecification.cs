@@ -35,6 +35,7 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 
 			UpdateTimePeriodCommand cmdUpdate = new UpdateTimePeriodCommand()
 			{
+				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				Magnitude = new double[] { 0.0 },
 				Offset = 0.0,
 				PhysicalDimensionId = Guid.NewGuid(),
@@ -77,11 +78,12 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 
 			UpdateTimePeriodCommand cmdUpdate = new UpdateTimePeriodCommand()
 			{
+				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				Magnitude = new double[] { 0.0 },
 				Offset = 0.0,
 				PhysicalDimensionId = Guid.NewGuid(),
 				RestrictedPassportId = Guid.Empty,
-				TimePeriodId = Guid.NewGuid(),
+				TimePeriodId = Guid.NewGuid()
 			};
 
 			IAuthorization<UpdateTimePeriodCommand> hndlAuthorization = new UpdateTimePeriodAuthorization(fxtAuthorizationData.PassportVisaRepository);
@@ -127,11 +129,12 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 
 			UpdateTimePeriodCommand cmdUpdate = new UpdateTimePeriodCommand()
 			{
+				ConcurrencyStamp = Guid.NewGuid().ToString(),
 				Magnitude = new double[] { 0.0 },
 				Offset = 0.0,
 				PhysicalDimensionId = Guid.NewGuid(),
 				RestrictedPassportId = Guid.Empty,
-				TimePeriodId = Guid.NewGuid(),
+				TimePeriodId = Guid.NewGuid()
 			};
 
 			IAuthorization<UpdateTimePeriodCommand> hndlAuthorization = new UpdateTimePeriodAuthorization(fxtAuthorizationData.PassportVisaRepository);

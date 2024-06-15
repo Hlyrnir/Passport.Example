@@ -32,6 +32,9 @@ namespace Application.Command.PhysicalData.PhysicalDimension.Update
 				msgError => new MessageResult<bool>(new MessageError() { Code = msgError.Code, Description = msgError.Description }),
 				async pdPhysicalDimension =>
 				{
+					if (pdPhysicalDimension.ConcurrencyStamp != msgMessage.ConcurrencyStamp)
+						return new MessageResult<bool>(DefaultMessageError.ConcurrencyViolation);
+
 					if (pdPhysicalDimension.TryChangeCultureName(msgMessage.CultureName) == false)
 						return new MessageResult<bool>(new MessageError() { Code = DomainError.Code.Method, Description = "Culture name is not valid." });
 

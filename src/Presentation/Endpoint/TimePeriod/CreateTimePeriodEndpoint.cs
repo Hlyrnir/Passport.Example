@@ -7,7 +7,7 @@ using Presentation.Common;
 
 namespace Presentation.Endpoint.PhysicalData
 {
-    public static class CreateTimePeriodEndpoint
+	public static class CreateTimePeriodEndpoint
 	{
 		public const string Name = "CreateTimePeriod";
 
@@ -42,11 +42,7 @@ namespace Presentation.Endpoint.PhysicalData
 
 			return mdtResult.Match(
 				msgError => Results.BadRequest($"{msgError.Code}: {msgError.Description}"),
-				guTimePeriodId =>
-				{
-					TimePeriodByIdResponse rspsTimePeriod = cmdInsert.MapToResponse(guTimePeriodId);
-					return TypedResults.CreatedAtRoute(rspsTimePeriod, FindTimePeriodByIdEndpoint.Name, new { guId = rspsTimePeriod.Id });
-				});
+				guTimePeriodId => TypedResults.CreatedAtRoute(FindTimePeriodByIdEndpoint.Name, new { guId = guTimePeriodId }));
 		}
 
 		private static CreateTimePeriodCommand MapToCommand(this CreateTimePeriodRequest cmdRequest, Guid guPassportId)
@@ -57,17 +53,6 @@ namespace Presentation.Endpoint.PhysicalData
 				Offset = cmdRequest.Offset,
 				PhysicalDimensionId = cmdRequest.PhysicalDimensionId,
 				RestrictedPassportId = guPassportId
-			};
-		}
-
-		private static TimePeriodByIdResponse MapToResponse(this CreateTimePeriodCommand cmdCreate, Guid guTimePeriodId)
-		{
-			return new TimePeriodByIdResponse()
-			{
-				Id = guTimePeriodId,
-				Magnitude = cmdCreate.Magnitude,
-				Offset = cmdCreate.Offset,
-				PhysicalDimensionId = cmdCreate.PhysicalDimensionId
 			};
 		}
 	}

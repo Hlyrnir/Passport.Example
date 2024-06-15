@@ -9,7 +9,7 @@ using Presentation.Common;
 
 namespace Presentation.Endpoint.PhysicalData
 {
-    public static class FindPhysicalDimensionByFilterEndpoint
+	public static class FindPhysicalDimensionByFilterEndpoint
 	{
 		public const string Name = "FindPhysicalDimensionByFilter";
 
@@ -92,6 +92,7 @@ namespace Presentation.Endpoint.PhysicalData
 			{
 				yield return new PhysicalDimensionByIdResponse()
 				{
+					ConcurrencyStamp = pdPhysicalDimension.ConcurrencyStamp,
 					ConversionFactorToSI = pdPhysicalDimension.ConversionFactorToSI,
 					CultureName = pdPhysicalDimension.CultureName,
 					ExponentOfAmpere = pdPhysicalDimension.ExponentOfUnit.Ampere,

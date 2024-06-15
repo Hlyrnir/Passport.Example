@@ -22,7 +22,7 @@ namespace ApplicationTest.Command.PhysicalData.PhysicalDimension.DeletePhysicalD
 		}
 
 		[Fact]
-		public async Task Delete_ShouldReturnTrue_WhenTimePeriodIsDeleted()
+		public async Task Delete_ShouldReturnTrue_WhenPhysicalDimensionIsDeleted()
 		{
 			// Arrange
 			IPhysicalDimension pdPhysicalDimension = DataFaker.PhysicalDimension.CreateTimeDefault();
@@ -57,7 +57,7 @@ namespace ApplicationTest.Command.PhysicalData.PhysicalDimension.DeletePhysicalD
 		}
 
 		[Fact]
-		public async Task Delete_ShouldReturnRepositoryError_WhenTimePeriodDoesNotExist()
+		public async Task Delete_ShouldReturnRepositoryError_WhenPhysicalDimensionDoesNotExist()
 		{
 			// Arrange
 			DeletePhysicalDimensionCommand cmdCreate = new DeletePhysicalDimensionCommand()
@@ -79,6 +79,7 @@ namespace ApplicationTest.Command.PhysicalData.PhysicalDimension.DeletePhysicalD
 					msgError.Should().NotBeNull();
 					msgError.Code.Should().Be(TestError.Repository.PhysicalDimension.NotFound.Code);
 					msgError.Description.Should().Be(TestError.Repository.PhysicalDimension.NotFound.Description);
+
 					return false;
 				},
 				bResult =>

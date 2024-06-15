@@ -35,7 +35,10 @@ namespace Application.Command.Authorization.PassportHolder.ConfirmPhoneNumber
 				msgError => new MessageResult<bool>(new MessageError() { Code = msgError.Code, Description = msgError.Description }),
 				async ppHolder =>
 				{
-					if (ppHolder.PhoneNumberIsConfirmed == false)
+                    if (ppHolder.ConcurrencyStamp != msgMessage.ConcurrencyStamp)
+                        return new MessageResult<bool>(DefaultMessageError.ConcurrencyViolation);
+
+                    if (ppHolder.PhoneNumberIsConfirmed == false)
 					{
 						if (ppHolder.TryConfirmPhoneNumber(msgMessage.PhoneNumber, ppSetting) == false)
 							return new MessageResult<bool>(new MessageError() { Code = DomainError.Code.Method, Description = "Phone number could not be confirmed." });

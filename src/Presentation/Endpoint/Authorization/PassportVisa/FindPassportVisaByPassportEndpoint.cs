@@ -64,6 +64,7 @@ namespace Presentation.Endpoint.Authorization.PassportVisa
 			{
 				yield return new PassportVisaResponse()
 				{
+					ConcurrencyStamp = ppVisa.ConcurrencyStamp,
 					Id = ppVisa.Id,
 					Level = ppVisa.Level,
 					Name = ppVisa.Name

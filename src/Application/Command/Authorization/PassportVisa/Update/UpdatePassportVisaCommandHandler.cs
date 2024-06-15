@@ -32,7 +32,10 @@ namespace Application.Command.Authorization.PassportVisa.Update
 				msgError => new MessageResult<bool>(new MessageError() { Code = msgError.Code, Description = msgError.Description }),
 				async ppVisa =>
 				{
-					if (ppVisa.Name != msgMessage.Name)
+                    if (ppVisa.ConcurrencyStamp != msgMessage.ConcurrencyStamp)
+                        return new MessageResult<bool>(DefaultMessageError.ConcurrencyViolation);
+
+                    if (ppVisa.Name != msgMessage.Name)
 					{
 						if (ppVisa.TryChangeName(msgMessage.Name) == false)
 							return new MessageResult<bool>(new MessageError() { Code = DomainError.Code.Method, Description = "Name could not be changed." });

@@ -68,7 +68,6 @@ namespace Presentation.Endpoint.Authorization.Passport
 				RestrictedPassportId = guPassportId,
 				IssuedBy = Guid.NewGuid(),
 				CredentialToRegister = ppCredentialToRegister,
-				//CredentialToVerify = ppCredentialToVerify,
 				CultureName = cmdRequest.CultureName,
 				EmailAddress = cmdRequest.EmailAddress,
 				FirstName = cmdRequest.FirstName,
@@ -76,14 +75,5 @@ namespace Presentation.Endpoint.Authorization.Passport
 				PhoneNumber = cmdRequest.PhoneNumber
 			};
 		}
-
-		//private static RegisterPassportResponse MapToResponse(this RegisterPassportCommand cmdRegister)
-		//{
-		//	return new RegisterPassportResponse()
-		//	{
-		//		PassportId = Guid.Empty,
-		//		PassportHolderId = Guid.Empty
-		//	};
-		//}
 	}
 }

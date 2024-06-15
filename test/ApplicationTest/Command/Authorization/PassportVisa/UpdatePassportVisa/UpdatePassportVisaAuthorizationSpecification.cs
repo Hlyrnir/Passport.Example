@@ -13,7 +13,7 @@ using Xunit;
 
 namespace ApplicationTest.Command.Authorization.PassportVisa.UpdatePassportVisa
 {
-	public sealed class UpdatePassportVisaAuthorizationSpecification : IClassFixture<PassportFixture>
+    public sealed class UpdatePassportVisaAuthorizationSpecification : IClassFixture<PassportFixture>
     {
         private readonly PassportFixture fxtAuthorizationData;
         private readonly ITimeProvider prvTime;
@@ -35,6 +35,7 @@ namespace ApplicationTest.Command.Authorization.PassportVisa.UpdatePassportVisa
 
             UpdatePassportVisaCommand cmdUpdate = new UpdatePassportVisaCommand()
             {
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
                 Level = 0,
                 Name = Guid.NewGuid().ToString(),
                 PassportVisaId = Guid.Empty,
@@ -76,6 +77,7 @@ namespace ApplicationTest.Command.Authorization.PassportVisa.UpdatePassportVisa
 
             UpdatePassportVisaCommand cmdUpdate = new UpdatePassportVisaCommand()
             {
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
                 Level = 0,
                 Name = Guid.NewGuid().ToString(),
                 PassportVisaId = Guid.Empty,
@@ -125,6 +127,7 @@ namespace ApplicationTest.Command.Authorization.PassportVisa.UpdatePassportVisa
 
             UpdatePassportVisaCommand cmdUpdate = new UpdatePassportVisaCommand()
             {
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
                 Level = 0,
                 Name = Guid.NewGuid().ToString(),
                 PassportVisaId = Guid.Empty,

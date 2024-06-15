@@ -42,6 +42,9 @@ namespace Application.Command.PhysicalData.TimePeriod.Update
 						msgError => new MessageResult<bool>(new MessageError() { Code = msgError.Code, Description = msgError.Description }),
 						async pdTimePeriod =>
 						{
+							if (pdTimePeriod.ConcurrencyStamp != msgMessage.ConcurrencyStamp)
+								return new MessageResult<bool>(DefaultMessageError.ConcurrencyViolation);
+
 							if (pdTimePeriod.TryChangePhysicalDimension(pdPhysicalDimension) == false)
 								return new MessageResult<bool>(new MessageError() { Code = DomainError.Code.Method, Description = "Physical dimension could not be changed." });
 

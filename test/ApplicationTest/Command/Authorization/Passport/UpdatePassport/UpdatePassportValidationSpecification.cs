@@ -22,15 +22,16 @@ namespace ApplicationTest.Command.Authorization.Passport.UpdatePassport
             prvTime = fxtAuthorizationData.TimeProvider;
         }
 
-		[Fact]
-		public async Task Update_ShouldReturnTrue_WhenPassportExists()
-		{
-			// Arrange
-			IPassport ppPassport = DataFaker.Passport.CreateDefault();
-			await fxtAuthorizationData.PassportRepository.InsertAsync(ppPassport, prvTime.GetUtcNow(), CancellationToken.None);
+        [Fact]
+        public async Task Update_ShouldReturnTrue_WhenPassportExists()
+        {
+            // Arrange
+            IPassport ppPassport = DataFaker.Passport.CreateDefault();
+            await fxtAuthorizationData.PassportRepository.InsertAsync(ppPassport, prvTime.GetUtcNow(), CancellationToken.None);
 
             UpdatePassportCommand cmdUpdate = new UpdatePassportCommand()
             {
+                ConcurrencyStamp = ppPassport.ConcurrencyStamp,
                 ExpiredAt = ppPassport.ExpiredAt,
                 IsAuthority = false,
                 IsEnabled = false,
@@ -41,92 +42,94 @@ namespace ApplicationTest.Command.Authorization.Passport.UpdatePassport
                 RestrictedPassportId = Guid.NewGuid()
             };
 
-			IValidation<UpdatePassportCommand> hndlValidation = new UpdatePassportValidation(
+            IValidation<UpdatePassportCommand> hndlValidation = new UpdatePassportValidation(
                 repoPassport: fxtAuthorizationData.PassportRepository,
                 repoVisa: fxtAuthorizationData.PassportVisaRepository,
                 srvValidation: fxtAuthorizationData.PassportValidation,
                 prvTime: prvTime);
 
-			// Act
-			IMessageResult<bool> rsltValidation = await hndlValidation.ValidateAsync(
-				msgMessage: cmdUpdate,
-				tknCancellation: CancellationToken.None);
+            // Act
+            IMessageResult<bool> rsltValidation = await hndlValidation.ValidateAsync(
+                msgMessage: cmdUpdate,
+                tknCancellation: CancellationToken.None);
 
-			// Assert
-			rsltValidation.Match(
-				msgError =>
-				{
-					msgError.Should().BeNull();
+            // Assert
+            rsltValidation.Match(
+                msgError =>
+                {
+                    msgError.Should().BeNull();
 
-					return false;
-				},
-				bResult =>
-				{
-					bResult.Should().BeTrue();
+                    return false;
+                },
+                bResult =>
+                {
+                    bResult.Should().BeTrue();
 
-					return true;
-				});
+                    return true;
+                });
 
-			// Clean up
-			await fxtAuthorizationData.PassportRepository.DeleteAsync(ppPassport, CancellationToken.None);
-		}
+            // Clean up
+            await fxtAuthorizationData.PassportRepository.DeleteAsync(ppPassport, CancellationToken.None);
+        }
 
-		[Fact]
-		public async Task Update_ShouldReturnMessageError_WhenPassportDoesNotExist()
-		{
-			// Arrange
-			UpdatePassportCommand cmdUpdate = new UpdatePassportCommand()
-			{
-				ExpiredAt = prvTime.GetUtcNow(),
-				IsAuthority = false,
-				IsEnabled = false,
-				LastCheckedAt = prvTime.GetUtcNow(),
-				LastCheckedBy = Guid.NewGuid(),
-				PassportIdToUpdate = Guid.NewGuid(),
-				PassportVisaId = Enumerable.Empty<Guid>(),
-				RestrictedPassportId = Guid.NewGuid()
-			};
+        [Fact]
+        public async Task Update_ShouldReturnMessageError_WhenPassportDoesNotExist()
+        {
+            // Arrange
+            UpdatePassportCommand cmdUpdate = new UpdatePassportCommand()
+            {
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+                ExpiredAt = prvTime.GetUtcNow(),
+                IsAuthority = false,
+                IsEnabled = false,
+                LastCheckedAt = prvTime.GetUtcNow(),
+                LastCheckedBy = Guid.NewGuid(),
+                PassportIdToUpdate = Guid.NewGuid(),
+                PassportVisaId = Enumerable.Empty<Guid>(),
+                RestrictedPassportId = Guid.NewGuid()
+            };
 
-			IValidation<UpdatePassportCommand> hndlValidation = new UpdatePassportValidation(
+            IValidation<UpdatePassportCommand> hndlValidation = new UpdatePassportValidation(
                 repoPassport: fxtAuthorizationData.PassportRepository,
                 repoVisa: fxtAuthorizationData.PassportVisaRepository,
                 srvValidation: fxtAuthorizationData.PassportValidation,
                 prvTime: prvTime);
 
-			// Act
-			IMessageResult<bool> rsltValidation = await hndlValidation.ValidateAsync(
-				msgMessage: cmdUpdate,
-				tknCancellation: CancellationToken.None);
+            // Act
+            IMessageResult<bool> rsltValidation = await hndlValidation.ValidateAsync(
+                msgMessage: cmdUpdate,
+                tknCancellation: CancellationToken.None);
 
-			// Assert
-			rsltValidation.Match(
-				msgError =>
-				{
-					msgError.Should().NotBeNull();
-					msgError.Code.Should().Be(ValidationError.Code.Method);
-					msgError.Description.Should().Contain($"Passport {cmdUpdate.PassportIdToUpdate} does not exist.");
+            // Assert
+            rsltValidation.Match(
+                msgError =>
+                {
+                    msgError.Should().NotBeNull();
+                    msgError.Code.Should().Be(ValidationError.Code.Method);
+                    msgError.Description.Should().Contain($"Passport {cmdUpdate.PassportIdToUpdate} does not exist.");
 
-					return false;
-				},
-				bResult =>
-				{
-					bResult.Should().BeFalse();
+                    return false;
+                },
+                bResult =>
+                {
+                    bResult.Should().BeFalse();
 
-					return true;
-				});
-		}
+                    return true;
+                });
+        }
 
-		[Fact]
+        [Fact]
         public async Task Update_ShouldReturnTrue_WhenExpiredAtDateIsLater()
         {
-			// Arrange
-			IPassport ppPassport = DataFaker.Passport.CreateDefault();
-			await fxtAuthorizationData.PassportRepository.InsertAsync(ppPassport, prvTime.GetUtcNow(), CancellationToken.None);
+            // Arrange
+            IPassport ppPassport = DataFaker.Passport.CreateDefault();
+            await fxtAuthorizationData.PassportRepository.InsertAsync(ppPassport, prvTime.GetUtcNow(), CancellationToken.None);
 
-			DateTimeOffset dtDate = prvTime.GetUtcNow().AddDays(1);
+            DateTimeOffset dtDate = prvTime.GetUtcNow().AddDays(1);
 
             UpdatePassportCommand cmdUpdate = new UpdatePassportCommand()
             {
+                ConcurrencyStamp = ppPassport.ConcurrencyStamp,
                 ExpiredAt = dtDate,
                 IsAuthority = false,
                 IsEnabled = false,
@@ -163,21 +166,22 @@ namespace ApplicationTest.Command.Authorization.Passport.UpdatePassport
                     return true;
                 });
 
-			// Clean up
-			await fxtAuthorizationData.PassportRepository.DeleteAsync(ppPassport, CancellationToken.None);
-		}
+            // Clean up
+            await fxtAuthorizationData.PassportRepository.DeleteAsync(ppPassport, CancellationToken.None);
+        }
 
         [Fact]
         public async Task Update_ShouldReturnMessageError_WhenExpiredAtIsTooEarly()
         {
-			// Arrange
-			IPassport ppPassport = DataFaker.Passport.CreateDefault();
-			await fxtAuthorizationData.PassportRepository.InsertAsync(ppPassport, prvTime.GetUtcNow(), CancellationToken.None);
+            // Arrange
+            IPassport ppPassport = DataFaker.Passport.CreateDefault();
+            await fxtAuthorizationData.PassportRepository.InsertAsync(ppPassport, prvTime.GetUtcNow(), CancellationToken.None);
 
-			DateTimeOffset dtDate = prvTime.GetUtcNow().AddDays(-1);
+            DateTimeOffset dtDate = prvTime.GetUtcNow().AddDays(-1);
 
             UpdatePassportCommand cmdUpdate = new UpdatePassportCommand()
             {
+                ConcurrencyStamp = ppPassport.ConcurrencyStamp,
                 ExpiredAt = dtDate,
                 IsAuthority = false,
                 IsEnabled = false,
@@ -217,8 +221,8 @@ namespace ApplicationTest.Command.Authorization.Passport.UpdatePassport
                     return true;
                 });
 
-			// Clean up
-			await fxtAuthorizationData.PassportRepository.DeleteAsync(ppPassport, CancellationToken.None);
-		}
+            // Clean up
+            await fxtAuthorizationData.PassportRepository.DeleteAsync(ppPassport, CancellationToken.None);
+        }
     }
 }

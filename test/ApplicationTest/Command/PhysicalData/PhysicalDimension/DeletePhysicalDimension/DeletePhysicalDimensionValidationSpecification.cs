@@ -23,7 +23,7 @@ namespace ApplicationTest.Command.PhysicalData.PhysicalDimension.DeletePhysicalD
 		}
 
 		[Fact]
-		public async Task Delete_ShouldReturnTrue_WhenTimePeriodExists()
+		public async Task Delete_ShouldReturnTrue_WhenPhysicalDimensionExists()
 		{
 			// Arrange
 			IPhysicalDimension pdPhysicalDimension = DataFaker.PhysicalDimension.CreateTimeDefault();
@@ -64,7 +64,7 @@ namespace ApplicationTest.Command.PhysicalData.PhysicalDimension.DeletePhysicalD
 		}
 
 		[Fact]
-		public async Task Delete_ShouldReturnMessageError_WhenTimePeriodDoesNotExist()
+		public async Task Delete_ShouldReturnMessageError_WhenPhysicalDimensionDoesNotExist()
 		{
 			// Arrange
 			Guid guPhysicalDimensionId = Guid.NewGuid();

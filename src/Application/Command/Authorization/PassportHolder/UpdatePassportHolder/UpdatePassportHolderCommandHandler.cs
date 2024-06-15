@@ -35,7 +35,10 @@ namespace Application.Command.Authorization.PassportHolder.UpdatePassportHolder
 				msgError => new MessageResult<bool>(new MessageError() { Code = msgError.Code, Description = msgError.Description }),
 				async ppHolder =>
 				{
-					if (ppHolder.CultureName != msgMessage.CultureName)
+                    if (ppHolder.ConcurrencyStamp != msgMessage.ConcurrencyStamp)
+                        return new MessageResult<bool>(DefaultMessageError.ConcurrencyViolation);
+
+                    if (ppHolder.CultureName != msgMessage.CultureName)
 					{
 						if (ppHolder.TryChangeCultureName(msgMessage.CultureName) == false)
 							return new MessageResult<bool>(new MessageError() { Code = DomainError.Code.Method, Description = "Culture name could not be changed." });

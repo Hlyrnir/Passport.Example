@@ -44,15 +44,16 @@ namespace Presentation.Endpoint.PhysicalData
 				bResult => TypedResults.Ok(bResult));
 		}
 
-		private static UpdateTimePeriodCommand MapToCommand(this UpdateTimePeriodRequest cmdRequest, Guid guPassportId)
+		private static UpdateTimePeriodCommand MapToCommand(this UpdateTimePeriodRequest rqstTimePeriod, Guid guPassportId)
 		{
 			return new UpdateTimePeriodCommand()
 			{
 				RestrictedPassportId = guPassportId,
-				TimePeriodId = cmdRequest.TimePeriodId,
-				PhysicalDimensionId = cmdRequest.PhysicalDimensionId,
-				Magnitude = cmdRequest.Magnitude,
-				Offset = cmdRequest.Offset
+				ConcurrencyStamp=rqstTimePeriod.ConcurrencyStamp,
+				TimePeriodId = rqstTimePeriod.TimePeriodId,
+				PhysicalDimensionId = rqstTimePeriod.PhysicalDimensionId,
+				Magnitude = rqstTimePeriod.Magnitude,
+				Offset = rqstTimePeriod.Offset
 			};
 		}
 	}

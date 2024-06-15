@@ -8,6 +8,6 @@ namespace Application.Command.PhysicalData.PhysicalDimension.Delete
 	{
 		public required Guid RestrictedPassportId { get; init; }
 
-		public Guid PhysicalDimensionId { get; init; } = Guid.Empty;
+		public required Guid PhysicalDimensionId { get; init; } = Guid.Empty;
 	}
 }

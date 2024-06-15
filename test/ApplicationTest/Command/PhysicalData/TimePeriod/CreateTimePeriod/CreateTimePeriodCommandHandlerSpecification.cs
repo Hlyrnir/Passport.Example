@@ -82,7 +82,7 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.CreateTimePeriod
 				});
 		}
 
-		[Fact]
+        [Fact]
 		public async Task Create_ShouldReturnRepositoryError_WhenPhysicalDimensionDoesNotExist()
 		{
 			// Arrange
@@ -109,6 +109,7 @@ namespace ApplicationTest.Command.PhysicalData.TimePeriod.CreateTimePeriod
 					msgError.Should().NotBeNull();
 					msgError.Code.Should().Be(TestError.Repository.PhysicalDimension.NotFound.Code);
 					msgError.Description.Should().Be(TestError.Repository.PhysicalDimension.NotFound.Description);
+
 					return false;
 				},
 				guTimePeriodId =>

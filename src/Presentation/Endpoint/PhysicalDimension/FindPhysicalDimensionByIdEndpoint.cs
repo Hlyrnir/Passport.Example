@@ -6,7 +6,7 @@ using Presentation.Common;
 
 namespace Presentation.Endpoint.PhysicalData
 {
-    public static class FindPhysicalDimensionByIdEndpoint
+	public static class FindPhysicalDimensionByIdEndpoint
 	{
 		public const string Name = "FindPhysicalDimensionById";
 
@@ -57,6 +57,7 @@ namespace Presentation.Endpoint.PhysicalData
 		{
 			return new PhysicalDimensionByIdResponse()
 			{
+				ConcurrencyStamp = rsltPhysicalDimension.PhysicalDimension.ConcurrencyStamp,
 				ConversionFactorToSI = rsltPhysicalDimension.PhysicalDimension.ConversionFactorToSI,
 				CultureName = rsltPhysicalDimension.PhysicalDimension.CultureName,
 				ExponentOfAmpere = rsltPhysicalDimension.PhysicalDimension.ExponentOfUnit.Ampere,

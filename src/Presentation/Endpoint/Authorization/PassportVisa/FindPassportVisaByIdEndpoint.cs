@@ -57,13 +57,14 @@ namespace Presentation.Endpoint.Authorization.PassportVisa
 			};
 		}
 
-		private static PassportVisaResponse MapToResponse(this PassportVisaByIdResult rstlVisa)
+		private static PassportVisaResponse MapToResponse(this PassportVisaByIdResult rsltVisa)
 		{
 			return new PassportVisaResponse()
 			{
-				Id = rstlVisa.PassportVisa.Id,
-				Level = rstlVisa.PassportVisa.Level,
-				Name = rstlVisa.PassportVisa.Name
+				ConcurrencyStamp = rsltVisa.PassportVisa.ConcurrencyStamp,
+				Id = rsltVisa.PassportVisa.Id,
+				Level = rsltVisa.PassportVisa.Level,
+				Name = rsltVisa.PassportVisa.Name
 			};
 		}
 	}

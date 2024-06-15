@@ -44,24 +44,25 @@ namespace Presentation.Endpoint.PhysicalData
 				bResult => TypedResults.Ok(bResult));
 		}
 
-		private static UpdatePhysicalDimensionCommand MapToCommand(this UpdatePhysicalDimensionRequest cmdRequest, Guid guPassportId)
+		private static UpdatePhysicalDimensionCommand MapToCommand(this UpdatePhysicalDimensionRequest rqstPhysicalDimension, Guid guPassportId)
 		{
 			return new UpdatePhysicalDimensionCommand()
 			{
 				RestrictedPassportId = guPassportId,
-				ConversionFactorToSI = cmdRequest.ConversionFactorToSI,
-				CultureName = cmdRequest.CultureName,
-				ExponentOfAmpere = cmdRequest.ExponentOfAmpere,
-				ExponentOfCandela = cmdRequest.ExponentOfCandela,
-				ExponentOfKelvin = cmdRequest.ExponentOfKelvin,
-				ExponentOfKilogram = cmdRequest.ExponentOfKilogram,
-				ExponentOfMetre = cmdRequest.ExponentOfMetre,
-				ExponentOfMole = cmdRequest.ExponentOfMole,
-				ExponentOfSecond = cmdRequest.ExponentOfSecond,
-				PhysicalDimensionId = cmdRequest.PhysicalDimensionId,
-				Name = cmdRequest.Name,
-				Symbol = cmdRequest.Symbol,
-				Unit = cmdRequest.Unit
+				ConcurrencyStamp = rqstPhysicalDimension.ConcurrencyStamp,
+				ConversionFactorToSI = rqstPhysicalDimension.ConversionFactorToSI,
+				CultureName = rqstPhysicalDimension.CultureName,
+				ExponentOfAmpere = rqstPhysicalDimension.ExponentOfAmpere,
+				ExponentOfCandela = rqstPhysicalDimension.ExponentOfCandela,
+				ExponentOfKelvin = rqstPhysicalDimension.ExponentOfKelvin,
+				ExponentOfKilogram = rqstPhysicalDimension.ExponentOfKilogram,
+				ExponentOfMetre = rqstPhysicalDimension.ExponentOfMetre,
+				ExponentOfMole = rqstPhysicalDimension.ExponentOfMole,
+				ExponentOfSecond = rqstPhysicalDimension.ExponentOfSecond,
+				PhysicalDimensionId = rqstPhysicalDimension.PhysicalDimensionId,
+				Name = rqstPhysicalDimension.Name,
+				Symbol = rqstPhysicalDimension.Symbol,
+				Unit = rqstPhysicalDimension.Unit
 			};
 		}
 	}

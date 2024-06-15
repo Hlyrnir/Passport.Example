@@ -35,7 +35,10 @@ namespace Application.Command.Authorization.PassportHolder.ConfirmEmailAddress
 				msgError => new MessageResult<bool>(new MessageError() { Code = msgError.Code, Description = msgError.Description }),
 				async ppHolder =>
 				{
-					if (ppHolder.EmailAddressIsConfirmed == false)
+                    if (ppHolder.ConcurrencyStamp != msgMessage.ConcurrencyStamp)
+                        return new MessageResult<bool>(DefaultMessageError.ConcurrencyViolation);
+
+                    if (ppHolder.EmailAddressIsConfirmed == false)
 					{
 						if (ppHolder.TryConfirmEmailAddress(msgMessage.EmailAddress, ppSetting) == false)
 							return new MessageResult<bool>(new MessageError() { Code = DomainError.Code.Method, Description = "Email address could not be confirmed." });
