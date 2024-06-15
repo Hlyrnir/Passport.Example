@@ -1,4 +1,4 @@
-﻿using Application.Command.Authorization.Passport.SeizePassport;
+﻿using Application.Command.Authorization.Passport.Seize;
 using Application.Error;
 using Application.Interface.Result;
 using Application.Interface.Time;

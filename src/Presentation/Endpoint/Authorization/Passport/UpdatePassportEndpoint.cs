@@ -1,4 +1,4 @@
-﻿using Application.Command.Authorization.Passport.UpdatePassport;
+﻿using Application.Command.Authorization.Passport.Update;
 using Application.Interface.Result;
 using Contract.v01.Request.Authorization.Passport;
 using Mediator;
@@ -6,7 +6,7 @@ using Presentation.Common;
 
 namespace Presentation.Endpoint.Authorization.Passport
 {
-	public static class UpdatePassportEndpoint
+    public static class UpdatePassportEndpoint
 	{
 		public const string Name = "UpdatePassport";
 

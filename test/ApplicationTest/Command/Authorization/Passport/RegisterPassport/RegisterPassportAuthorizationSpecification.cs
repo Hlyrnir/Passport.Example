@@ -1,4 +1,4 @@
-﻿using Application.Command.Authorization.Passport.RegisterPassport;
+﻿using Application.Command.Authorization.Passport.Register;
 using Application.Common.Authorization;
 using Application.Interface.Authorization;
 using Application.Interface.Result;

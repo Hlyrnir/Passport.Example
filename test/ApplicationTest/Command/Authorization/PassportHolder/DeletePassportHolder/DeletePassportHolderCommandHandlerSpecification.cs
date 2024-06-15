@@ -1,4 +1,4 @@
-﻿using Application.Command.Authorization.PassportHolder.DeletePassportHolder;
+﻿using Application.Command.Authorization.PassportHolder.Delete;
 using Application.Interface.Result;
 using Application.Interface.Time;
 using ApplicationTest.Common;

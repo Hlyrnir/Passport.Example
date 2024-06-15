@@ -1,9 +1,9 @@
-﻿using Contract.v01.Response.Passport;
+﻿using Contract.v01.Response.Authorization;
 using Domain.Interface.Authorization;
 
 namespace Presentation.Endpoint.Authorization.PassportVisa.MapToResponse
 {
-	public static class MapPassportVisaToResponse
+    public static class MapPassportVisaToResponse
 	{
 		public static IEnumerable<PassportVisaResponse> MapToResponse(this IEnumerable<IPassportVisa> enumPassportVisa)
 		{

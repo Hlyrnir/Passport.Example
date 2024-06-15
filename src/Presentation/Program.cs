@@ -14,6 +14,7 @@ using Presentation.Authorization.Policy;
 using Presentation.Endpoint;
 using Presentation.Endpoint.Authentication;
 using Presentation.Endpoint.Authorization.Passport;
+using Presentation.Endpoint.Authorization.PassportHolder;
 using Presentation.Endpoint.Authorization.PassportVisa;
 using Presentation.Endpoint.PhysicalData;
 using Presentation.Health;
@@ -155,6 +156,12 @@ webApplication.AddFindPassportByIdEndpoint();
 webApplication.AddRegisterPassportEndpoint();
 webApplication.AddUpdatePassportEndpoint();
 webApplication.AddSeizePassportEndpoint();
+
+webApplication.AddConfirmEmailAddressEndpoint();
+webApplication.AddConfirmPhoneNumberEndpoint();
+webApplication.AddFindPassportHolderByIdEndpoint();
+webApplication.AddDeletePassportHolderEndpoint();
+webApplication.AddUpdatePassportHolderEndpoint();
 
 webApplication.AddFindPassportVisaByIdEndpoint();
 webApplication.AddFindPassportVisaByPassportIdEndpoint();

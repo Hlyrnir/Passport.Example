@@ -1,4 +1,4 @@
-﻿using Application.Command.Authorization.Passport.UpdatePassport;
+﻿using Application.Command.Authorization.Passport.Update;
 using Application.Common.Authorization;
 using Application.Error;
 using Application.Interface.Authorization;

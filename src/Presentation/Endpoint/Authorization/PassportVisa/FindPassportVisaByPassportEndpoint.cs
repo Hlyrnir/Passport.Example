@@ -1,13 +1,13 @@
 ﻿using Application.Interface.Result;
 using Application.Query.Authorization.PassportVisa.ByPassport;
-using Contract.v01.Response.Passport;
+using Contract.v01.Response.Authorization;
 using Domain.Interface.Authorization;
 using Mediator;
 using Presentation.Common;
 
 namespace Presentation.Endpoint.Authorization.PassportVisa
 {
-	public static class FindPassportVisaByPassportIdEndpoint
+    public static class FindPassportVisaByPassportIdEndpoint
 	{
 		public const string Name = "FindPassportVisaByPassportId";
 

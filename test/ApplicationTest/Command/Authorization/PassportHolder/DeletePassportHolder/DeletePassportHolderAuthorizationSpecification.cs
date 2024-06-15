@@ -1,4 +1,4 @@
-﻿using Application.Command.Authorization.PassportHolder.DeletePassportHolder;
+﻿using Application.Command.Authorization.PassportHolder.Delete;
 using Application.Common.Authorization;
 using Application.Error;
 using Application.Interface.Authorization;

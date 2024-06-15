@@ -1,4 +1,4 @@
-﻿using Application.Command.Authorization.PassportToken.DeletePassportToken;
+﻿using Application.Command.Authorization.PassportToken.Delete;
 using Application.Error;
 using Application.Interface.Result;
 using Application.Interface.Time;

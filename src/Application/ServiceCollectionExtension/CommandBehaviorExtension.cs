@@ -1,12 +1,12 @@
 ﻿using Application.Command.Authentication.BearerTokenByCredential;
 using Application.Command.Authentication.BearerTokenByRefreshToken;
-using Application.Command.Authorization.Passport.RegisterPassport;
-using Application.Command.Authorization.Passport.SeizePassport;
-using Application.Command.Authorization.Passport.UpdatePassport;
+using Application.Command.Authorization.Passport.Register;
+using Application.Command.Authorization.Passport.Seize;
+using Application.Command.Authorization.Passport.Update;
 using Application.Command.Authorization.PassportHolder.ConfirmEmailAddress;
 using Application.Command.Authorization.PassportHolder.ConfirmPhoneNumber;
-using Application.Command.Authorization.PassportHolder.DeletePassportHolder;
-using Application.Command.Authorization.PassportHolder.UpdatePassportHolder;
+using Application.Command.Authorization.PassportHolder.Delete;
+using Application.Command.Authorization.PassportHolder.Update;
 using Application.Command.Authorization.PassportVisa.Create;
 using Application.Command.Authorization.PassportVisa.Delete;
 using Application.Command.Authorization.PassportVisa.Update;
@@ -27,7 +27,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Application.ServiceCollectionExtension
 {
-	public static class CommandBehaviorExtension
+    public static class CommandBehaviorExtension
     {
         public static IServiceCollection AddCommandBehaviour(this IServiceCollection cltService)
         {

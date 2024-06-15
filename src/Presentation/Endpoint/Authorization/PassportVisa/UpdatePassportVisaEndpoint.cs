@@ -49,7 +49,7 @@ namespace Presentation.Endpoint.Authorization.PassportVisa
 			return new UpdatePassportVisaCommand()
 			{
 				RestrictedPassportId = guPassportId,
-				PassportVisaId = rqstPassportVisa.Id,
+				PassportVisaId = rqstPassportVisa.PassportVisaId,
 				ConcurrencyStamp = rqstPassportVisa.ConcurrencyStamp,
 				Name = rqstPassportVisa.Name,
 				Level = rqstPassportVisa.Level

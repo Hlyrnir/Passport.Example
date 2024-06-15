@@ -53,33 +53,6 @@ namespace InfrastructureTest.Passport.PassportVisa
 		}
 
 		[Fact]
-		public async Task Find_ShouldReturnRepositoryError_WhenVisaIdDoesNotExist()
-		{
-			// Arrange
-			Guid guVisaId = Guid.NewGuid();
-
-			// Act
-			IRepositoryResult<IPassportVisa> rsltVisa = await fxtAuthorizationData.PassportVisaRepository.FindByIdAsync(guVisaId, CancellationToken.None);
-
-			// Assert
-			rsltVisa.Match(
-				msgError =>
-				{
-					msgError.Should().NotBeNull();
-					msgError.Code.Should().Be(PassportError.Code.Method);
-					msgError.Description.Should().Be($"No data for {guVisaId} has been found.");
-
-					return false;
-				},
-				ppVisaInRepository =>
-				{
-					ppVisaInRepository.Should().BeNull();
-
-					return true;
-				});
-		}
-
-		[Fact]
 		public async Task Find_ShouldReturnRepositoryError_WhenNameDoesNotExist()
 		{
 			// Arrange

@@ -1,9 +1,9 @@
-﻿using Contract.v01.Response.Passport;
+﻿using Contract.v01.Response.Authorization;
 using Domain.Interface.Authorization;
 
 namespace Presentation.Endpoint.Authorization.Passport.MapToResponse
 {
-	public static class MapPassportToResponse
+    public static class MapPassportToResponse
 	{
 		public static PassportResponse MapToResponse(this IPassport ppPassport)
 		{

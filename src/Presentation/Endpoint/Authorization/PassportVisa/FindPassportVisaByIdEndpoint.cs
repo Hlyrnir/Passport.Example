@@ -1,6 +1,6 @@
 ﻿using Application.Interface.Result;
 using Application.Query.Authorization.PassportVisa.ById;
-using Contract.v01.Response.Passport;
+using Contract.v01.Response.Authorization;
 using Mediator;
 using Presentation.Common;
 
@@ -25,7 +25,7 @@ namespace Presentation.Endpoint.Authorization.PassportVisa
 		}
 
 		public static async Task<IResult> FindPassportVisaById(
-			Guid guId,
+			Guid guPassportVisaIdToFind,
 			HttpContext httpContext,
 			ISender mdtMediator,
 			CancellationToken tknCancellation)
@@ -35,7 +35,7 @@ namespace Presentation.Endpoint.Authorization.PassportVisa
 			if (httpContext.TryParsePassportId(out guPassportId) == false)
 				return Results.BadRequest("Passport could not be identified.");
 
-			PassportVisaByIdQuery qryPassportVisa = MapToQuery(guId, guPassportId);
+			PassportVisaByIdQuery qryPassportVisa = MapToQuery(guPassportVisaIdToFind, guPassportId);
 
 			IMessageResult<PassportVisaByIdResult> mdtResult = await mdtMediator.Send(qryPassportVisa, tknCancellation);
 
@@ -48,23 +48,23 @@ namespace Presentation.Endpoint.Authorization.PassportVisa
 				});
 		}
 
-		private static PassportVisaByIdQuery MapToQuery(Guid guPassportIdToFind, Guid guPassportId)
+		private static PassportVisaByIdQuery MapToQuery(Guid guPassportVisaIdToFind, Guid guPassportId)
 		{
 			return new PassportVisaByIdQuery()
 			{
 				RestrictedPassportId = guPassportId,
-				PassportVisaId = guPassportIdToFind
+				PassportVisaId = guPassportVisaIdToFind
 			};
 		}
 
-		private static PassportVisaResponse MapToResponse(this PassportVisaByIdResult rsltVisa)
+		private static PassportVisaResponse MapToResponse(this PassportVisaByIdResult rsltPassportVisa)
 		{
 			return new PassportVisaResponse()
 			{
-				ConcurrencyStamp = rsltVisa.PassportVisa.ConcurrencyStamp,
-				Id = rsltVisa.PassportVisa.Id,
-				Level = rsltVisa.PassportVisa.Level,
-				Name = rsltVisa.PassportVisa.Name
+				ConcurrencyStamp = rsltPassportVisa.PassportVisa.ConcurrencyStamp,
+				Id = rsltPassportVisa.PassportVisa.Id,
+				Level = rsltPassportVisa.PassportVisa.Level,
+				Name = rsltPassportVisa.PassportVisa.Name
 			};
 		}
 	}

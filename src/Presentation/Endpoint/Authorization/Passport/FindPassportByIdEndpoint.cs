@@ -1,12 +1,12 @@
 ﻿using Application.Interface.Result;
 using Application.Query.Authorization.Passport.ById;
-using Contract.v01.Response.Passport;
+using Contract.v01.Response.Authorization;
 using Mediator;
 using Presentation.Common;
 
 namespace Presentation.Endpoint.Authorization.Passport
 {
-	public static class FindPassportByIdEndpoint
+    public static class FindPassportByIdEndpoint
 	{
 		public const string Name = "FindPassportById";
 
@@ -25,7 +25,7 @@ namespace Presentation.Endpoint.Authorization.Passport
 		}
 
 		public static async Task<IResult> FindPassportById(
-			Guid guId,
+			Guid guPassportIdToFind,
 			HttpContext httpContext,
 			ISender mdtMediator,
 			CancellationToken tknCancellation)
@@ -35,7 +35,7 @@ namespace Presentation.Endpoint.Authorization.Passport
 			if (httpContext.TryParsePassportId(out guPassportId) == false)
 				return Results.BadRequest("Passport could not be identified.");
 
-			PassportByIdQuery qryPassport = MapToQuery(guId, guPassportId);
+			PassportByIdQuery qryPassport = MapToQuery(guPassportIdToFind, guPassportId);
 
 			IMessageResult<PassportByIdResult> mdtResult = await mdtMediator.Send(qryPassport, tknCancellation);
 
@@ -57,20 +57,20 @@ namespace Presentation.Endpoint.Authorization.Passport
 			};
 		}
 
-		private static PassportResponse MapToResponse(this PassportByIdResult rsltById)
+		private static PassportResponse MapToResponse(this PassportByIdResult rsltPassportById)
 		{
 			return new PassportResponse()
 			{
-				ConcurrencyStamp = rsltById.Passport.ConcurrencyStamp,
-				ExpiredAt = rsltById.Passport.ExpiredAt,
-				HolderId = rsltById.Passport.HolderId,
-				Id = rsltById.Passport.Id,
-				IsAuthority = rsltById.Passport.IsAuthority,
-				IsEnabled = rsltById.Passport.IsEnabled,
-				IssuedBy = rsltById.Passport.IssuedBy,
-				LastCheckedAt = rsltById.Passport.LastCheckedAt,
-				LastCheckedBy = rsltById.Passport.LastCheckedBy,
-				VisaId = rsltById.Passport.VisaId
+				ConcurrencyStamp = rsltPassportById.Passport.ConcurrencyStamp,
+				ExpiredAt = rsltPassportById.Passport.ExpiredAt,
+				HolderId = rsltPassportById.Passport.HolderId,
+				Id = rsltPassportById.Passport.Id,
+				IsAuthority = rsltPassportById.Passport.IsAuthority,
+				IsEnabled = rsltPassportById.Passport.IsEnabled,
+				IssuedBy = rsltPassportById.Passport.IssuedBy,
+				LastCheckedAt = rsltPassportById.Passport.LastCheckedAt,
+				LastCheckedBy = rsltPassportById.Passport.LastCheckedBy,
+				VisaId = rsltPassportById.Passport.VisaId
 			};
 		}
 	}

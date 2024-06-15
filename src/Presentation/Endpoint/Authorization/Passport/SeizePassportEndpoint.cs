@@ -1,11 +1,11 @@
-﻿using Application.Command.Authorization.Passport.SeizePassport;
+﻿using Application.Command.Authorization.Passport.Seize;
 using Application.Interface.Result;
 using Mediator;
 using Presentation.Common;
 
 namespace Presentation.Endpoint.Authorization.Passport
 {
-	public static class SeizePassportEndpoint
+    public static class SeizePassportEndpoint
 	{
 		public const string Name = "SeizePassport";
 

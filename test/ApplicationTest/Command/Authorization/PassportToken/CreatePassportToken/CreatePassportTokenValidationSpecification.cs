@@ -1,4 +1,4 @@
-﻿using Application.Command.Authorization.PassportToken.CreatePassportToken;
+﻿using Application.Command.Authorization.PassportToken.Create;
 using Application.Error;
 using Application.Interface.Result;
 using Application.Interface.Time;

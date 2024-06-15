@@ -23,8 +23,4 @@
 		<InternalsVisibleTo Include="PresentationTest" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Endpoint\Authorization\PassportHolder\" />
-	</ItemGroup>
-
 </Project>
