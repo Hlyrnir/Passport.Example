@@ -1,5 +1,5 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Factory;
 using Application.Interface.Passport;
 using Application.Interface.Result;
@@ -9,7 +9,7 @@ using Mediator;
 
 namespace Application.Command.Authorization.PassportVisa.Create
 {
-	internal sealed class CreatePassportVisaCommandHandler : ICommandHandler<CreatePassportVisaCommand, IMessageResult<Guid>>
+    internal sealed class CreatePassportVisaCommandHandler : ICommandHandler<CreatePassportVisaCommand, IMessageResult<Guid>>
 	{
 		private readonly ITimeProvider prvTime;
 		private readonly IPassportVisaRepository repoVisa;

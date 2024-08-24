@@ -1,5 +1,5 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Interface.Passport;
 using Application.Interface.Result;
 using Application.Interface.Time;
@@ -7,7 +7,7 @@ using Application.Interface.Validation;
 
 namespace Application.Command.Authorization.PassportHolder.ConfirmPhoneNumber
 {
-	internal sealed class ConfirmPhoneNumberValidation : IValidation<ConfirmPhoneNumberCommand>
+    internal sealed class ConfirmPhoneNumberValidation : IValidation<ConfirmPhoneNumberCommand>
 	{
 		private readonly ITimeProvider prvTime;
 		private readonly IPassportValidation srvValidation;

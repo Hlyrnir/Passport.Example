@@ -1,6 +1,6 @@
 ﻿using Application.Command.Authorization.PassportHolder.Update;
 using Application.Common.Authorization;
-using Application.Error;
+using Application.Common.Error;
 using Application.Interface.Authorization;
 using Application.Interface.Result;
 using Application.Interface.Time;

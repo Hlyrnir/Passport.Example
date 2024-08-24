@@ -1,6 +1,6 @@
-﻿using Application.Common.Result.Message;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Common.Result.Repository;
-using Application.Error;
 using Application.Interface.Passport;
 using Application.Interface.Result;
 using Domain.Interface.Authorization;

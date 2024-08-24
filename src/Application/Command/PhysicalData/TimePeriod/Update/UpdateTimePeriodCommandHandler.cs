@@ -1,6 +1,6 @@
-﻿using Application.Common.Result.Message;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Common.Result.Repository;
-using Application.Error;
 using Application.Interface.PhysicalData;
 using Application.Interface.Result;
 using Application.Interface.Time;
@@ -9,7 +9,7 @@ using Mediator;
 
 namespace Application.Command.PhysicalData.TimePeriod.Update
 {
-	internal sealed class UpdateTimePeriodCommandHandler : ICommandHandler<UpdateTimePeriodCommand, IMessageResult<bool>>
+    internal sealed class UpdateTimePeriodCommandHandler : ICommandHandler<UpdateTimePeriodCommand, IMessageResult<bool>>
 	{
 		private readonly ITimeProvider prvTime;
 		private readonly IPhysicalDimensionRepository repoPhysicalDimension;

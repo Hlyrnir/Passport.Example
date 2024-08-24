@@ -1,4 +1,4 @@
-﻿using Application.Error;
+﻿using Application.Common.Error;
 using Application.Filter;
 using Application.Interface.Result;
 using Application.Interface.Time;
@@ -10,7 +10,7 @@ using Xunit;
 
 namespace ApplicationTest.Query.PhysicalData.PhysicalDimension.ByFilter
 {
-	public sealed class PhysicalDimensionByFilterValidationSpecification : IClassFixture<PhysicalDataFixture>
+    public sealed class PhysicalDimensionByFilterValidationSpecification : IClassFixture<PhysicalDataFixture>
 	{
 		private readonly PhysicalDataFixture fxtPhysicalData;
 		private readonly ITimeProvider prvTime;

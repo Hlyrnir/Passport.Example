@@ -1,6 +1,6 @@
-﻿using Application.Common.Result.Message;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Common.Result.Repository;
-using Application.Error;
 using Application.Interface.PhysicalData;
 using Application.Interface.Result;
 using Domain.Interface.PhysicalData;
@@ -8,7 +8,7 @@ using Mediator;
 
 namespace Application.Query.PhysicalData.TimePeriod.ByFilter
 {
-	internal sealed class TimePeriodByFilterQueryHandler : IQueryHandler<TimePeriodByFilterQuery, IMessageResult<TimePeriodByFilterResult>>
+    internal sealed class TimePeriodByFilterQueryHandler : IQueryHandler<TimePeriodByFilterQuery, IMessageResult<TimePeriodByFilterResult>>
 	{
 		private readonly ITimePeriodRepository repoTimePeriod;
 

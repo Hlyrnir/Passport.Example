@@ -1,5 +1,5 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Interface.PhysicalData;
 using Application.Interface.Result;
 using Domain.Interface.PhysicalData;
@@ -7,7 +7,7 @@ using Mediator;
 
 namespace Application.Command.PhysicalData.PhysicalDimension.Delete
 {
-	internal sealed class DeletePhysicalDimensionCommandHandler : ICommandHandler<DeletePhysicalDimensionCommand, IMessageResult<bool>>
+    internal sealed class DeletePhysicalDimensionCommandHandler : ICommandHandler<DeletePhysicalDimensionCommand, IMessageResult<bool>>
 	{
 		private readonly IPhysicalDimensionRepository repoPhysicalDimension;
 

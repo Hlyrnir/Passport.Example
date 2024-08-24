@@ -1,5 +1,5 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Interface.Authorization;
 using Application.Interface.Message;
 using Application.Interface.Passport;
@@ -10,7 +10,7 @@ using Mediator;
 
 namespace Application.Common.Authorization
 {
-	internal sealed class MessageAuthorizationBehaviour<TMessage, TResponse> : IPipelineBehavior<TMessage, IMessageResult<TResponse>>
+    internal sealed class MessageAuthorizationBehaviour<TMessage, TResponse> : IPipelineBehavior<TMessage, IMessageResult<TResponse>>
         where TMessage : notnull, IMessage, IRestrictedAuthorization
     {
         private readonly IAuthorization<TMessage> msgAuthorization;

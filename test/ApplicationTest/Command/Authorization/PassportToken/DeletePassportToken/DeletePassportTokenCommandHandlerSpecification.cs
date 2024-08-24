@@ -1,5 +1,5 @@
 ﻿using Application.Command.Authorization.PassportToken.Delete;
-using Application.Error;
+using Application.Common.Error;
 using Application.Interface.Result;
 using Application.Interface.Time;
 using ApplicationTest.Common;

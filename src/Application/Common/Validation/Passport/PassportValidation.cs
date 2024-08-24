@@ -1,6 +1,6 @@
-﻿using Application.Common.Result.Message;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Common.Validation.Message;
-using Application.Error;
 using Application.Interface.Validation;
 using Domain.Interface.Authorization;
 

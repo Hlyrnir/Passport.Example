@@ -1,4 +1,5 @@
-﻿using Application.Filter;
+﻿using Application.Common.Error;
+using Application.Filter;
 using Application.Interface.Result;
 using Application.Query.PhysicalData.TimePeriod.ByFilter;
 using Contract.v01.Request.TimePeriod;
@@ -21,6 +22,7 @@ namespace Presentation.Endpoint.PhysicalData
 				.WithName(Name)
 				.WithTags("TimePeriod")
 				.Produces(StatusCodes.Status401Unauthorized)
+				.Produces(StatusCodes.Status403Forbidden)
 				.Produces<TimePeriodByFilterResponse>(StatusCodes.Status200OK)
 				.Produces<string>(StatusCodes.Status400BadRequest)
 				.WithApiVersionSet(EndpointVersion.VersionSet)
@@ -43,7 +45,13 @@ namespace Presentation.Endpoint.PhysicalData
 			IMessageResult<TimePeriodByFilterResult> mdtResult = await mdtMediator.Send(qryFindByFilter, tknCancellation);
 
 			return mdtResult.Match(
-				msgError => Results.BadRequest($"{msgError.Code}: {msgError.Description}"),
+				msgError =>
+				{
+					if (msgError.Equals(AuthorizationError.PassportVisa.VisaDoesNotExist) == true)
+						return Results.Forbid();
+
+					return Results.BadRequest($"{msgError.Code}: {msgError.Description}");
+				},
 				rsltTimePeriod => TypedResults.Ok(rsltTimePeriod.MapToResponse(
 					qryFindByFilter.Filter.Page,
 					qryFindByFilter.Filter.PageSize)));

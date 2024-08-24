@@ -1,6 +1,6 @@
-﻿using Application.Common.Result.Message;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Common.Result.Repository;
-using Application.Error;
 using Application.Interface.Passport;
 using Application.Interface.Result;
 using Domain.Interface.Authorization;
@@ -8,7 +8,7 @@ using Mediator;
 
 namespace Application.Query.Authorization.PassportHolder.ById
 {
-	internal sealed class PassportHolderByIdQueryHandler : IQueryHandler<PassportHolderByIdQuery, IMessageResult<PassportHolderByIdResult>>
+    internal sealed class PassportHolderByIdQueryHandler : IQueryHandler<PassportHolderByIdQuery, IMessageResult<PassportHolderByIdResult>>
 	{
 		private readonly IPassportHolderRepository repoHolder;
 

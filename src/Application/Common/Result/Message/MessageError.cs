@@ -19,5 +19,5 @@ namespace Application.Common.Result.Message
         /// The description for this error.
         /// </value>
         public required string Description { get; init; }
-    }
+	}
 }

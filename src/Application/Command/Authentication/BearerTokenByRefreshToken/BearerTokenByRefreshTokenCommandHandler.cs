@@ -1,7 +1,7 @@
 ﻿using Application.Common.Authentication;
+using Application.Common.Error;
 using Application.Common.Result.Message;
 using Application.Common.Result.Repository;
-using Application.Error;
 using Application.Interface.Authentication;
 using Application.Interface.Passport;
 using Application.Interface.Result;
@@ -16,7 +16,7 @@ using System.Text;
 
 namespace Application.Command.Authentication.BearerTokenByRefreshToken
 {
-	internal sealed class BearerTokenByRefreshTokenCommandHandler : ICommandHandler<BearerTokenByRefreshTokenCommand, IMessageResult<string>>
+    internal sealed class BearerTokenByRefreshTokenCommandHandler : ICommandHandler<BearerTokenByRefreshTokenCommand, IMessageResult<string>>
 	{
 		private readonly ITimeProvider prvTime;
 

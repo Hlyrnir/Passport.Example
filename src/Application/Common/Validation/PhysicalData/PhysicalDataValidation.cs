@@ -1,11 +1,11 @@
-﻿using Application.Common.Result.Message;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Common.Validation.Message;
-using Application.Error;
 using Application.Interface.Validation;
 
 namespace Application.Common.Validation.PhysicalData
 {
-	internal sealed class PhysicalDataValidation : MessageValidation, IPhysicalDataValidation
+    internal sealed class PhysicalDataValidation : MessageValidation, IPhysicalDataValidation
 	{
 		public bool ValidateGuid(Guid guGuid, string sPropertyName)
 		{

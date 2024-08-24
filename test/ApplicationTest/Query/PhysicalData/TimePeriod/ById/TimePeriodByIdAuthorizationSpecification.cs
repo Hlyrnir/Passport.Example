@@ -1,5 +1,5 @@
 ﻿using Application.Common.Authorization;
-using Application.Error;
+using Application.Common.Error;
 using Application.Interface.Authorization;
 using Application.Interface.Result;
 using Application.Interface.Time;
@@ -13,7 +13,7 @@ using static ApplicationTest.Error.TestError;
 
 namespace ApplicationTest.Query.PhysicalData.TimePeriod.ById
 {
-	public sealed class TimePeriodByIdAuthorizationSpecification : IClassFixture<PhysicalDataFixture>
+    public sealed class TimePeriodByIdAuthorizationSpecification : IClassFixture<PhysicalDataFixture>
 	{
 		private readonly PhysicalDataFixture fxtPhysicalData;
 		private readonly ITimeProvider prvTime;

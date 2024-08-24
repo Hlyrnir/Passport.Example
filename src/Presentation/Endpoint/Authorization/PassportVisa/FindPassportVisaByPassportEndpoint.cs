@@ -1,4 +1,5 @@
-﻿using Application.Interface.Result;
+﻿using Application.Common.Error;
+using Application.Interface.Result;
 using Application.Query.Authorization.PassportVisa.ByPassport;
 using Contract.v01.Response.Authorization;
 using Domain.Interface.Authorization;
@@ -19,6 +20,7 @@ namespace Presentation.Endpoint.Authorization.PassportVisa
 				.WithName(Name)
 				.WithTags("PassportVisa")
 				.Produces(StatusCodes.Status401Unauthorized)
+				.Produces(StatusCodes.Status403Forbidden)
 				.Produces<IEnumerable<PassportVisaResponse>>(StatusCodes.Status200OK)
 				.Produces<string>(StatusCodes.Status400BadRequest)
 				.WithApiVersionSet(EndpointVersion.VersionSet)
@@ -41,7 +43,13 @@ namespace Presentation.Endpoint.Authorization.PassportVisa
 			IMessageResult<PassportVisaByPassportIdResult> mdtResult = await mdtMediator.Send(qryPassportVisa, tknCancellation);
 
 			return mdtResult.Match(
-				msgError => Results.BadRequest($"{msgError.Code}: {msgError.Description}"),
+				msgError =>
+				{
+					if (msgError.Equals(AuthorizationError.PassportVisa.VisaDoesNotExist) == true)
+						return Results.Forbid();
+
+					return Results.BadRequest($"{msgError.Code}: {msgError.Description}");
+				},
 				rsltPassportVisa =>
 				{
 					IEnumerable<PassportVisaResponse> rspnPassportVisa = rsltPassportVisa.MapToResponse();

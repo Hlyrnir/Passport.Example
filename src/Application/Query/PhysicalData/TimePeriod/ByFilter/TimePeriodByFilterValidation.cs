@@ -1,11 +1,11 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Interface.Result;
 using Application.Interface.Validation;
 
 namespace Application.Query.PhysicalData.TimePeriod.ByFilter
 {
-	internal class TimePeriodByFilterValidation : IValidation<TimePeriodByFilterQuery>
+    internal class TimePeriodByFilterValidation : IValidation<TimePeriodByFilterQuery>
 	{
 		private readonly IPhysicalDataValidation srvValidation;
 

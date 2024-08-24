@@ -1,6 +1,6 @@
-﻿using Application.Common.Result.Message;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Common.Validation.Passport;
-using Application.Error;
 using Application.Interface.Validation;
 using ApplicationTest.Common;
 using Domain.Interface.Authorization;

@@ -1,6 +1,6 @@
 ﻿using Application.Common.Authorization;
+using Application.Common.Error;
 using Application.Common.Result.Message;
-using Application.Error;
 using Application.Interface.Authorization;
 using Application.Interface.Passport;
 using Application.Interface.Result;
@@ -8,7 +8,7 @@ using Domain.Interface.Authorization;
 
 namespace Application.Command.Authorization.PassportToken.ResetCredential
 {
-	internal sealed class ResetCredentialAuthorization : IAuthorization<ResetCredentialCommand>
+    internal sealed class ResetCredentialAuthorization : IAuthorization<ResetCredentialCommand>
 	{
 		private readonly IPassportVisaRepository repoVisa;
 

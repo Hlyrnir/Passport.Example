@@ -1,5 +1,5 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Interface.PhysicalData;
 using Application.Interface.Result;
 using Application.Interface.Time;
@@ -8,7 +8,7 @@ using Mediator;
 
 namespace Application.Command.PhysicalData.PhysicalDimension.Create
 {
-	internal sealed class CreatePhysicalDimensionCommandHandler : ICommandHandler<CreatePhysicalDimensionCommand, IMessageResult<Guid>>
+    internal sealed class CreatePhysicalDimensionCommandHandler : ICommandHandler<CreatePhysicalDimensionCommand, IMessageResult<Guid>>
 	{
 		private readonly ITimeProvider prvTime;
 		private readonly IPhysicalDimensionRepository repoPhysicalDimension;

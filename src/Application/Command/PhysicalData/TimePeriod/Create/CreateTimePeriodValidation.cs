@@ -1,11 +1,11 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Interface.Result;
 using Application.Interface.Validation;
 
 namespace Application.Command.PhysicalData.TimePeriod.Create
 {
-	internal class CreateTimePeriodValidation : IValidation<CreateTimePeriodCommand>
+    internal class CreateTimePeriodValidation : IValidation<CreateTimePeriodCommand>
 	{
 		async ValueTask<IMessageResult<bool>> IValidation<CreateTimePeriodCommand>.ValidateAsync(CreateTimePeriodCommand msgMessage, CancellationToken tknCancellation)
 		{

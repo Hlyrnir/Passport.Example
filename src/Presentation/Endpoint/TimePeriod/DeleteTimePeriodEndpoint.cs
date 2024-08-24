@@ -1,4 +1,5 @@
 ﻿using Application.Command.PhysicalData.TimePeriod.Delete;
+using Application.Common.Error;
 using Application.Interface.Result;
 using Mediator;
 using Presentation.Common;
@@ -17,6 +18,7 @@ namespace Presentation.Endpoint.PhysicalData
 				.WithName(Name)
 				.WithTags("TimePeriod")
 				.Produces(StatusCodes.Status401Unauthorized)
+				.Produces(StatusCodes.Status403Forbidden)
 				.Produces<bool>(StatusCodes.Status200OK)
 				.Produces<string>(StatusCodes.Status400BadRequest)
 				.WithApiVersionSet(EndpointVersion.VersionSet)
@@ -39,7 +41,13 @@ namespace Presentation.Endpoint.PhysicalData
 			IMessageResult<bool> mdtResult = await mdtMediator.Send(cmdDelete, tknCancellation);
 
 			return mdtResult.Match(
-				msgError => Results.BadRequest($"{msgError.Code}: {msgError.Description}"),
+				msgError =>
+				{
+					if (msgError.Equals(AuthorizationError.PassportVisa.VisaDoesNotExist) == true)
+						return Results.Forbid();
+
+					return Results.BadRequest($"{msgError.Code}: {msgError.Description}");
+				},
 				bResult => Results.Ok(bResult));
 		}
 

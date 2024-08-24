@@ -1,11 +1,11 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Interface.Result;
 using Application.Interface.Validation;
 
 namespace Application.Command.Authentication.BearerTokenByRefreshToken
 {
-	internal sealed class BearerTokenByRefreshTokenValidation : IValidation<BearerTokenByRefreshTokenCommand>
+    internal sealed class BearerTokenByRefreshTokenValidation : IValidation<BearerTokenByRefreshTokenCommand>
 	{
 		private readonly IPassportValidation srvValidation;
 

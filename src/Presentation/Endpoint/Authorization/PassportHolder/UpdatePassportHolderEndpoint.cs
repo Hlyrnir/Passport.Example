@@ -1,4 +1,5 @@
 ﻿using Application.Command.Authorization.PassportHolder.Update;
+using Application.Common.Error;
 using Application.Interface.Result;
 using Contract.v01.Request.Authorization.PassportHolder;
 using Mediator;
@@ -18,6 +19,7 @@ namespace Presentation.Endpoint.Authorization.PassportHolder
                 .WithName(Name)
                 .WithTags("PassportHolder")
                 .Produces(StatusCodes.Status401Unauthorized)
+                .Produces(StatusCodes.Status403Forbidden)
                 .Produces<bool>(StatusCodes.Status200OK)
                 .Produces<string>(StatusCodes.Status400BadRequest)
                 .WithApiVersionSet(EndpointVersion.VersionSet)
@@ -40,7 +42,13 @@ namespace Presentation.Endpoint.Authorization.PassportHolder
             IMessageResult<bool> mdtResult = await mdtMediator.Send(cmdUpdate, tknCancellation);
 
             return mdtResult.Match(
-                msgError => Results.BadRequest($"{msgError.Code}: {msgError.Description}"),
+				msgError =>
+                {
+					if (msgError.Equals(AuthorizationError.PassportVisa.VisaDoesNotExist) == true)
+						return Results.Forbid();
+
+					return Results.BadRequest($"{msgError.Code}: {msgError.Description}");
+                },
                 bResult => TypedResults.Ok(bResult));
         }
 

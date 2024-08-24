@@ -1,5 +1,5 @@
 ﻿using Application.Command.Authorization.PassportVisa.Delete;
-using Application.Error;
+using Application.Common.Error;
 using Application.Interface.Result;
 using Application.Interface.Time;
 using Application.Interface.Validation;
@@ -11,7 +11,7 @@ using Xunit;
 
 namespace ApplicationTest.Command.Authorization.PassportVisa.DeletePassportVisa
 {
-	public sealed class DeletePassportVisaValidationSpecification : IClassFixture<PassportFixture>
+    public sealed class DeletePassportVisaValidationSpecification : IClassFixture<PassportFixture>
     {
         private readonly PassportFixture fxtAuthorizationData;
         private readonly ITimeProvider prvTime;

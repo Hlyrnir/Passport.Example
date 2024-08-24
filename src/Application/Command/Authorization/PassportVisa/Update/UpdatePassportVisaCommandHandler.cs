@@ -1,5 +1,5 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Interface.Passport;
 using Application.Interface.Result;
 using Application.Interface.Time;
@@ -8,7 +8,7 @@ using Mediator;
 
 namespace Application.Command.Authorization.PassportVisa.Update
 {
-	internal sealed class UpdatePassportVisaCommandHandler : ICommandHandler<UpdatePassportVisaCommand, IMessageResult<bool>>
+    internal sealed class UpdatePassportVisaCommandHandler : ICommandHandler<UpdatePassportVisaCommand, IMessageResult<bool>>
 	{
 		private readonly ITimeProvider prvTime;
 		private readonly IPassportVisaRepository repoVisa;

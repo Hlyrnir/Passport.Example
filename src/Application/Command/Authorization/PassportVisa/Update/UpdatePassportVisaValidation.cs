@@ -1,5 +1,5 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Interface.Passport;
 using Application.Interface.Result;
 using Application.Interface.Time;
@@ -7,7 +7,7 @@ using Application.Interface.Validation;
 
 namespace Application.Command.Authorization.PassportVisa.Update
 {
-	internal sealed class UpdatePassportVisaValidation : IValidation<UpdatePassportVisaCommand>
+    internal sealed class UpdatePassportVisaValidation : IValidation<UpdatePassportVisaCommand>
 	{
 		private readonly ITimeProvider prvTime;
 		private readonly IPassportValidation srvValidation;

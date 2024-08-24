@@ -1,4 +1,5 @@
-﻿using Application.Interface.Result;
+﻿using Application.Common.Error;
+using Application.Interface.Result;
 using Application.Query.PhysicalData.PhysicalDimension.ById;
 using Contract.v01.Response.PhysicalDimension;
 using Mediator;
@@ -6,7 +7,7 @@ using Presentation.Common;
 
 namespace Presentation.Endpoint.PhysicalData
 {
-	public static class FindPhysicalDimensionByIdEndpoint
+    public static class FindPhysicalDimensionByIdEndpoint
 	{
 		public const string Name = "FindPhysicalDimensionById";
 
@@ -18,6 +19,7 @@ namespace Presentation.Endpoint.PhysicalData
 				.WithName(Name)
 				.WithTags("PhysicalDimension")
 				.Produces(StatusCodes.Status401Unauthorized)
+				.Produces(StatusCodes.Status403Forbidden)
 				.Produces<PhysicalDimensionByIdResponse>(StatusCodes.Status200OK)
 				.Produces<string>(StatusCodes.Status400BadRequest)
 				.WithApiVersionSet(EndpointVersion.VersionSet)
@@ -40,7 +42,13 @@ namespace Presentation.Endpoint.PhysicalData
 			IMessageResult<PhysicalDimensionByIdResult> mdtResult = await mdtMediator.Send(qryGetById, tknCancellation);
 
 			return mdtResult.Match(
-				msgError => Results.BadRequest($"{msgError.Code}: {msgError.Description}"),
+				msgError =>
+				{
+					if (msgError.Equals(AuthorizationError.PassportVisa.VisaDoesNotExist) == true)
+						return Results.Forbid();
+
+					return Results.BadRequest($"{msgError.Code}: {msgError.Description}");
+				},
 				rsltPhysicalDimension => TypedResults.Ok(rsltPhysicalDimension.MapToResponse()));
 		}
 

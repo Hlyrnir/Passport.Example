@@ -1,5 +1,5 @@
 ﻿using Application.Command.Authorization.PassportVisa.Create;
-using Application.Error;
+using Application.Common.Error;
 using Application.Interface.Result;
 using Application.Interface.Time;
 using Application.Interface.Validation;
@@ -9,7 +9,7 @@ using Xunit;
 
 namespace ApplicationTest.Command.Authorization.PassportVisa.CreatePassportVisa
 {
-	public sealed class CreatePassportVisaValidationSpecification : IClassFixture<PassportFixture>
+    public sealed class CreatePassportVisaValidationSpecification : IClassFixture<PassportFixture>
     {
         private readonly PassportFixture fxtAuthorizationData;
         private readonly ITimeProvider prvTime;

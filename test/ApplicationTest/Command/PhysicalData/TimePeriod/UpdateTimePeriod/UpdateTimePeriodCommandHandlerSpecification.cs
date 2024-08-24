@@ -1,5 +1,5 @@
 ﻿using Application.Command.PhysicalData.TimePeriod.Update;
-using Application.Error;
+using Application.Common.Error;
 using Application.Interface.Result;
 using Application.Interface.Time;
 using ApplicationTest.Common;
@@ -11,7 +11,7 @@ using Xunit;
 
 namespace ApplicationTest.Command.PhysicalData.TimePeriod.UpdateTimePeriod
 {
-	public sealed class UpdateTimePeriodCommandHandlerSpecification : IClassFixture<PhysicalDataFixture>
+    public sealed class UpdateTimePeriodCommandHandlerSpecification : IClassFixture<PhysicalDataFixture>
 	{
 		private readonly PhysicalDataFixture fxtPhysicalData;
 		private readonly ITimeProvider prvTime;

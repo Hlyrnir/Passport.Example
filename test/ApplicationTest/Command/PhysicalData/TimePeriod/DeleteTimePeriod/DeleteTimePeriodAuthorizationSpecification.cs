@@ -1,6 +1,6 @@
 ﻿using Application.Command.PhysicalData.TimePeriod.Delete;
 using Application.Common.Authorization;
-using Application.Error;
+using Application.Common.Error;
 using Application.Interface.Authorization;
 using Application.Interface.Result;
 using Application.Interface.Time;
@@ -13,7 +13,7 @@ using static ApplicationTest.Error.TestError;
 
 namespace ApplicationTest.Command.PhysicalData.TimePeriod.DeleteTimePeriod
 {
-	public sealed class DeleteTimePeriodAuthorizationSpecification : IClassFixture<PhysicalDataFixture>
+    public sealed class DeleteTimePeriodAuthorizationSpecification : IClassFixture<PhysicalDataFixture>
 	{
 		private readonly PhysicalDataFixture fxtPhysicalData;
 

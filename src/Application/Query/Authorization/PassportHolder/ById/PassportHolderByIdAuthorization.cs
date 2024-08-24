@@ -1,6 +1,6 @@
 ﻿using Application.Common.Authorization;
+using Application.Common.Error;
 using Application.Common.Result.Message;
-using Application.Error;
 using Application.Interface.Authorization;
 using Application.Interface.Passport;
 using Application.Interface.Result;
@@ -9,7 +9,7 @@ using Domain.Interface.Authorization;
 
 namespace Application.Query.PhysicalData.PhysicalDimension.ById
 {
-	internal sealed class PassportHolderByIdAuthorization : IAuthorization<PassportHolderByIdQuery>
+    internal sealed class PassportHolderByIdAuthorization : IAuthorization<PassportHolderByIdQuery>
 	{
 		private readonly IPassportVisaRepository repoVisa;
 

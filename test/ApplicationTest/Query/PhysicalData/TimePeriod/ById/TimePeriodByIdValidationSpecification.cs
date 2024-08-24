@@ -1,4 +1,4 @@
-﻿using Application.Error;
+﻿using Application.Common.Error;
 using Application.Interface.Result;
 using Application.Interface.Time;
 using Application.Interface.Validation;
@@ -11,7 +11,7 @@ using Xunit;
 
 namespace ApplicationTest.Query.PhysicalData.TimePeriod.ById
 {
-	public sealed class TimePeriodByIdValidationSpecification : IClassFixture<PhysicalDataFixture>
+    public sealed class TimePeriodByIdValidationSpecification : IClassFixture<PhysicalDataFixture>
 	{
 		private readonly PhysicalDataFixture fxtPhysicalData;
 		private readonly ITimeProvider prvTime;

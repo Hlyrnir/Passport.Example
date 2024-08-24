@@ -1,11 +1,11 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Interface.Result;
 using Application.Interface.Validation;
 
 namespace Application.Command.Authentication.BearerTokenByCredential
 {
-	internal sealed class BearerTokenByCredentialValidation : IValidation<BearerTokenByCredentialCommand>
+    internal sealed class BearerTokenByCredentialValidation : IValidation<BearerTokenByCredentialCommand>
 	{
 		private readonly IPassportValidation srvValidation;
 

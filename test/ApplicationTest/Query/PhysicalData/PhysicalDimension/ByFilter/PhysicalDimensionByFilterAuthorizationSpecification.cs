@@ -1,5 +1,5 @@
 ﻿using Application.Common.Authorization;
-using Application.Error;
+using Application.Common.Error;
 using Application.Filter;
 using Application.Interface.Authorization;
 using Application.Interface.Result;
@@ -14,7 +14,7 @@ using static ApplicationTest.Error.TestError;
 
 namespace ApplicationTest.Query.PhysicalData.PhysicalDimension.ByFilter
 {
-	public sealed class PhysicalDimensionByFilterAuthorizationSpecification : IClassFixture<PhysicalDataFixture>
+    public sealed class PhysicalDimensionByFilterAuthorizationSpecification : IClassFixture<PhysicalDataFixture>
 	{
 		private readonly PhysicalDataFixture fxtPhysicalData;
 		private readonly ITimeProvider prvTime;

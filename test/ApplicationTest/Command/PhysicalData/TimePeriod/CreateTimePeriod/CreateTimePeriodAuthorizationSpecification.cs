@@ -1,6 +1,6 @@
 ﻿using Application.Command.PhysicalData.TimePeriod.Create;
 using Application.Common.Authorization;
-using Application.Error;
+using Application.Common.Error;
 using Application.Interface.Authorization;
 using Application.Interface.Result;
 using Application.Interface.Time;
@@ -13,7 +13,7 @@ using static ApplicationTest.Error.TestError;
 
 namespace ApplicationTest.Command.PhysicalData.TimePeriod.CreateTimePeriod
 {
-	public sealed class CreateTimePeriodAuthorizationSpecification : IClassFixture<PhysicalDataFixture>
+    public sealed class CreateTimePeriodAuthorizationSpecification : IClassFixture<PhysicalDataFixture>
 	{
 		private readonly PhysicalDataFixture fxtPhysicalData;
 

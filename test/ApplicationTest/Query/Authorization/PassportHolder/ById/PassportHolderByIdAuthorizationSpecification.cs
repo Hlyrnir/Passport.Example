@@ -1,5 +1,5 @@
 ﻿using Application.Common.Authorization;
-using Application.Error;
+using Application.Common.Error;
 using Application.Interface.Authorization;
 using Application.Interface.Result;
 using Application.Interface.Time;
@@ -13,7 +13,7 @@ using static ApplicationTest.Error.TestError;
 
 namespace ApplicationTest.Query.Authorization.PassportHolder.ById
 {
-	public sealed class PassportHolderByIdAuthorizationSpecification : IClassFixture<PassportFixture>
+    public sealed class PassportHolderByIdAuthorizationSpecification : IClassFixture<PassportFixture>
 	{
 		private readonly PassportFixture fxtAuthorizationData;
 		private readonly ITimeProvider prvTime;

@@ -1,5 +1,5 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Interface.PhysicalData;
 using Application.Interface.Result;
 using Domain.Interface.PhysicalData;
@@ -7,7 +7,7 @@ using Mediator;
 
 namespace Application.Command.PhysicalData.TimePeriod.Delete
 {
-	internal sealed class DeleteTimePeriodCommandHandler : ICommandHandler<DeleteTimePeriodCommand, IMessageResult<bool>>
+    internal sealed class DeleteTimePeriodCommandHandler : ICommandHandler<DeleteTimePeriodCommand, IMessageResult<bool>>
 	{
 		private readonly ITimePeriodRepository repoTimePeriod;
 

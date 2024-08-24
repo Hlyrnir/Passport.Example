@@ -1,5 +1,5 @@
 ﻿using Application.Command.PhysicalData.PhysicalDimension.Update;
-using Application.Error;
+using Application.Common.Error;
 using Application.Interface.Result;
 using Application.Interface.Time;
 using Application.Interface.Validation;
@@ -11,7 +11,7 @@ using Xunit;
 
 namespace ApplicationTest.Command.PhysicalData.PhysicalDimension.UpdatePhysicalDimension
 {
-	public sealed class UpdatePhysicalDimensionValidationSpecification : IClassFixture<PhysicalDataFixture>
+    public sealed class UpdatePhysicalDimensionValidationSpecification : IClassFixture<PhysicalDataFixture>
 	{
 		private readonly PhysicalDataFixture fxtPhysicalData;
 		private readonly ITimeProvider prvTime;

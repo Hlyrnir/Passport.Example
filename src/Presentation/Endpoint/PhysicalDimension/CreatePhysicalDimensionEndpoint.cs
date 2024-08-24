@@ -1,4 +1,5 @@
 ﻿using Application.Command.PhysicalData.PhysicalDimension.Create;
+using Application.Common.Error;
 using Application.Interface.Result;
 using Contract.v01.Request.PhysicalDimension;
 using Contract.v01.Response.PhysicalDimension;
@@ -19,6 +20,7 @@ namespace Presentation.Endpoint.PhysicalData
 				.WithName(Name)
 				.WithTags("PhysicalDimension")
 				.Produces(StatusCodes.Status401Unauthorized)
+				.Produces(StatusCodes.Status403Forbidden)
 				.Produces<PhysicalDimensionByIdResponse>(StatusCodes.Status201Created)
 				.Produces<string>(StatusCodes.Status400BadRequest)
 				.WithApiVersionSet(EndpointVersion.VersionSet)
@@ -41,7 +43,13 @@ namespace Presentation.Endpoint.PhysicalData
 			IMessageResult<Guid> mdtResult = await mdtMediator.Send(cmdInsert, tknCancellation);
 
 			return mdtResult.Match(
-				msgError => Results.BadRequest($"{msgError.Code}: {msgError.Description}"),
+				msgError =>
+				{
+					if (msgError.Equals(AuthorizationError.PassportVisa.VisaDoesNotExist) == true)
+						return Results.Forbid();
+
+					return Results.BadRequest($"{msgError.Code}: {msgError.Description}");
+				},
 				guPhysicalDimensionId => TypedResults.CreatedAtRoute(FindPhysicalDimensionByIdEndpoint.Name, new { guId = guPhysicalDimensionId }));
 		}
 

@@ -1,5 +1,5 @@
-﻿using Application.Common.Result.Message;
-using Application.Error;
+﻿using Application.Common.Error;
+using Application.Common.Result.Message;
 using Application.Interface.DataAccess;
 using Application.Interface.Passport;
 using Application.Interface.Result;
@@ -10,7 +10,7 @@ using Mediator;
 
 namespace Application.Command.Authorization.PassportToken.ResetCredential
 {
-	internal sealed class ResetCredentialCommandHandler : ICommandHandler<ResetCredentialCommand, IMessageResult<bool>>
+    internal sealed class ResetCredentialCommandHandler : ICommandHandler<ResetCredentialCommand, IMessageResult<bool>>
 	{
 		private readonly ITimeProvider prvTime;
 

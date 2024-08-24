@@ -1,6 +1,6 @@
 ﻿using Application.Common.Authorization;
+using Application.Common.Error;
 using Application.Common.Result.Message;
-using Application.Error;
 using Application.Interface.Authorization;
 using Application.Interface.Passport;
 using Application.Interface.Result;
@@ -8,7 +8,7 @@ using Domain.Interface.Authorization;
 
 namespace Application.Command.Authorization.PassportHolder.ConfirmPhoneNumber
 {
-	internal sealed class ConfirmPhoneNumberAuthorization : IAuthorization<ConfirmPhoneNumberCommand>
+    internal sealed class ConfirmPhoneNumberAuthorization : IAuthorization<ConfirmPhoneNumberCommand>
 	{
 		private readonly IPassportVisaRepository repoVisa;
 

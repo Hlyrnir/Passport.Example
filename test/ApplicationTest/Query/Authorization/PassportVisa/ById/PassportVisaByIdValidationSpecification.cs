@@ -1,4 +1,4 @@
-﻿using Application.Error;
+﻿using Application.Common.Error;
 using Application.Interface.Result;
 using Application.Interface.Time;
 using Application.Interface.Validation;
@@ -11,7 +11,7 @@ using Xunit;
 
 namespace ApplicationTest.Query.Authorization.PassportVisa.ById
 {
-	public sealed class PassportVisaByIdValidationSpecification : IClassFixture<PassportFixture>
+    public sealed class PassportVisaByIdValidationSpecification : IClassFixture<PassportFixture>
 	{
 		private readonly PassportFixture fxtAuthorizationData;
 		private readonly ITimeProvider prvTime;
