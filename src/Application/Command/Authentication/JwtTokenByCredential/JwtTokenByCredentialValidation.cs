@@ -3,18 +3,18 @@ using Application.Common.Result.Message;
 using Application.Interface.Result;
 using Application.Interface.Validation;
 
-namespace Application.Command.Authentication.BearerTokenByCredential
+namespace Application.Command.Authentication.JwtTokenByCredential
 {
-    internal sealed class BearerTokenByCredentialValidation : IValidation<BearerTokenByCredentialCommand>
+	internal sealed class JwtTokenByCredentialValidation : IValidation<JwtTokenByCredentialCommand>
 	{
 		private readonly IPassportValidation srvValidation;
 
-		public BearerTokenByCredentialValidation(IPassportValidation srvValidation)
+		public JwtTokenByCredentialValidation(IPassportValidation srvValidation)
 		{
 			this.srvValidation = srvValidation;
 		}
 
-		async ValueTask<IMessageResult<bool>> IValidation<BearerTokenByCredentialCommand>.ValidateAsync(BearerTokenByCredentialCommand mdtCommand, CancellationToken tknCancellation)
+		async ValueTask<IMessageResult<bool>> IValidation<JwtTokenByCredentialCommand>.ValidateAsync(JwtTokenByCredentialCommand mdtCommand, CancellationToken tknCancellation)
 		{
 			if (tknCancellation.IsCancellationRequested)
 				return new MessageResult<bool>(DefaultMessageError.TaskAborted);

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Application.Token;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace Presentation.Authorization.Policy
 {
@@ -12,7 +12,7 @@ namespace Presentation.Authorization.Policy
 
 			plcyBuilder.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
 			plcyBuilder.RequireAuthenticatedUser();
-			plcyBuilder.RequireClaim(ClaimTypes.NameIdentifier);
+			plcyBuilder.RequireClaim(JwtTokenClaim.Id);
 
 			return plcyBuilder.Build();
 		}

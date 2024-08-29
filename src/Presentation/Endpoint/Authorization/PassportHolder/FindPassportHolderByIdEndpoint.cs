@@ -20,7 +20,7 @@ namespace Presentation.Endpoint.Authorization.PassportHolder
                 .WithTags("PassportHolder")
                 .Produces(StatusCodes.Status401Unauthorized)
                 .Produces(StatusCodes.Status403Forbidden)
-                .Produces<PassportVisaResponse>(StatusCodes.Status200OK)
+                .Produces<PassportHolderResponse>(StatusCodes.Status200OK)
                 .Produces<string>(StatusCodes.Status400BadRequest)
                 .WithApiVersionSet(EndpointVersion.VersionSet)
                 .HasApiVersion(1.0);

@@ -6,8 +6,10 @@ using Application.Common.Time;
 using Application.Common.Validation;
 using Application.Common.Validation.Passport;
 using Application.Common.Validation.PhysicalData;
+using Application.Interface.Authentication;
 using Application.Interface.Time;
 using Application.Interface.Validation;
+using Application.Token;
 using Domain.Interface.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +51,9 @@ namespace Application.ServiceCollectionExtension
                 return prvService.GetDataProtector(DataProtectionSetting.DataProtectorPurpose);
             });
 
+            // Add jwt service
+            cltService.TryAddScoped<IJwtTokenService, JwtTokenService>();
+
             cltService.TryAddTransient<IPassportCredential, PassportCredential>();
 
             cltService.TryAddSingleton<IPassportHasher, PassportHasher>();
@@ -58,7 +63,7 @@ namespace Application.ServiceCollectionExtension
 
             cltService.TryAddTransient<IPhysicalDataValidation, PhysicalDataValidation>();
 
-            return cltService;
+			return cltService;
         }
     }
 }

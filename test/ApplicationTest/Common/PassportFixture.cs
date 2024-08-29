@@ -1,11 +1,13 @@
 ﻿using Application.Authorization;
 using Application.Common.Authentication;
 using Application.Common.Validation.Passport;
+using Application.Interface.Authentication;
 using Application.Interface.DataAccess;
 using Application.Interface.Passport;
 using Application.Interface.Time;
 using Application.Interface.UnitOfWork;
 using Application.Interface.Validation;
+using Application.Token;
 using ApplicationTest.InfrastructureFaker;
 using ApplicationTest.InfrastructureFaker.Authorization;
 using Domain.Interface.Authorization;
@@ -21,8 +23,9 @@ namespace ApplicationTest.Common
         private readonly IPassportSetting ppSetting;
 
         private readonly IOptions<JwtTokenSetting> jwtSetting;
+		private readonly IJwtTokenService jwtTokenService;
 
-        private readonly IPassportRepository repoPassport;
+		private readonly IPassportRepository repoPassport;
         private readonly IPassportHolderRepository repoHolder;
         private readonly IPassportTokenRepository repoToken;
         private readonly IPassportVisaRepository repoVisa;
@@ -57,6 +60,8 @@ namespace ApplicationTest.Common
                 Audience = "TEST_AUDIENCE",
                 Issuer = "TEST_ISSUER"
             });
+
+            jwtTokenService = new JwtTokenService(prvTime, jwtSetting);
         }
 
         public ITimeProvider TimeProvider { get => prvTime; }
@@ -68,5 +73,6 @@ namespace ApplicationTest.Common
 		public IPassportSetting PassportSetting { get => ppSetting; }
         public IPassportValidation PassportValidation { get => new PassportValidation(ppSetting); }
         public IOptions<JwtTokenSetting> JwtTokenSetting { get => jwtSetting; }
+        internal IJwtTokenService JwtTokenService { get => jwtTokenService; }
     }
 }

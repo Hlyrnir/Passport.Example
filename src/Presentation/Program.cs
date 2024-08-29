@@ -20,7 +20,6 @@ using Presentation.Endpoint.PhysicalData;
 using Presentation.Health;
 using Presentation.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Security.Claims;
 using System.Text;
 
 WebApplicationBuilder webBuilder = WebApplication.CreateBuilder(args);
@@ -69,7 +68,6 @@ webBuilder.Services.AddAuthentication(optAuthentication =>
 	{
 		ClockSkew = TimeSpan.FromSeconds(15),
 
-		NameClaimType = ClaimTypes.NameIdentifier,
 		ValidIssuer = webBuilder.Configuration["JwtSetting:Issuer"],
 		ValidAudience = webBuilder.Configuration["JwtSetting:Audience"],
 		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(webBuilder.Configuration["JwtSetting:SecretKey"])),

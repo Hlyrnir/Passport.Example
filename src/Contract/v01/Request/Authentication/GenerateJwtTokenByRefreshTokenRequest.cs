@@ -1,6 +1,6 @@
 ﻿namespace Contract.v01.Request.Authentication
 {
-	public sealed class GenerateBearerTokenByRefreshTokenRequest
+	public sealed class GenerateJwtTokenByRefreshTokenRequest
 	{
 		public required Guid PassportId { get; init; }
 		public required string Provider { get; init; }

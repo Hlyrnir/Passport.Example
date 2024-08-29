@@ -1,5 +1,5 @@
-﻿using Application.Command.Authentication.BearerTokenByCredential;
-using Application.Command.Authentication.BearerTokenByRefreshToken;
+﻿using Application.Command.Authentication.JwtTokenByCredential;
+using Application.Command.Authentication.JwtTokenByRefreshToken;
 using Application.Command.Authorization.Passport.Register;
 using Application.Command.Authorization.Passport.Seize;
 using Application.Command.Authorization.Passport.Update;
@@ -27,16 +27,16 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Application.ServiceCollectionExtension
 {
-    public static class CommandBehaviorExtension
+	public static class CommandBehaviorExtension
     {
         public static IServiceCollection AddCommandBehaviour(this IServiceCollection cltService)
         {
             #region Authentication - Validation
-            cltService.AddScoped(typeof(IPipelineBehavior<BearerTokenByCredentialCommand, IMessageResult<string>>), typeof(MessageValidationBehaviour<BearerTokenByCredentialCommand, string>));
-            cltService.TryAddTransient<IValidation<BearerTokenByCredentialCommand>, BearerTokenByCredentialValidation>();
+            cltService.AddScoped(typeof(IPipelineBehavior<JwtTokenByCredentialCommand, IMessageResult<string>>), typeof(MessageValidationBehaviour<JwtTokenByCredentialCommand, string>));
+            cltService.TryAddTransient<IValidation<JwtTokenByCredentialCommand>, JwtTokenByCredentialValidation>();
 
-            cltService.AddScoped(typeof(IPipelineBehavior<BearerTokenByRefreshTokenCommand, IMessageResult<string>>), typeof(MessageValidationBehaviour<BearerTokenByRefreshTokenCommand, string>));
-            cltService.TryAddTransient<IValidation<BearerTokenByRefreshTokenCommand>, BearerTokenByRefreshTokenValidation>();
+            cltService.AddScoped(typeof(IPipelineBehavior<JwtTokenByRefreshTokenCommand, IMessageResult<string>>), typeof(MessageValidationBehaviour<JwtTokenByRefreshTokenCommand, string>));
+            cltService.TryAddTransient<IValidation<JwtTokenByRefreshTokenCommand>, JwtTokenByRefreshTokenValidation>();
 			#endregion
 
 			#region Passport - Authorization

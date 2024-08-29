@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using Application.Token;
+using System.Security.Claims;
 
 namespace Presentation.Common
 {
@@ -11,7 +12,7 @@ namespace Presentation.Common
 			if (httpContext.User is null)
 				return false;
 
-			string? sPassportId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+			string? sPassportId = httpContext.User.FindFirstValue(JwtTokenClaim.Id);
 
 			if (Guid.TryParse(sPassportId, out guPassportId) == false)
 				return false;

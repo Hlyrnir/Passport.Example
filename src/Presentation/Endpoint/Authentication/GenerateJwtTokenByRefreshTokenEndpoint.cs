@@ -1,11 +1,13 @@
-﻿using Application.Command.Authentication.BearerTokenByRefreshToken;
+﻿using Application.Command.Authentication.JwtTokenByRefreshToken;
 using Application.Interface.Result;
+using Application.Token;
 using Contract.v01.Request.Authentication;
+using Contract.v01.Response.Authentication;
 using Mediator;
 
 namespace Presentation.Endpoint.Authentication
 {
-	public static class GenerateTokenByRefreshTokenEndpoint
+	public static class GenerateJwtTokenByRefreshTokenEndpoint
 	{
 		public const string Name = "GenerateTokenByRefreshToken";
 
@@ -17,34 +19,45 @@ namespace Presentation.Endpoint.Authentication
 				.WithName(Name)
 				.WithTags("Authentication")
 				.Produces(StatusCodes.Status401Unauthorized)
-				.Produces<string>(StatusCodes.Status200OK)
+				.Produces<JwtTokenResponse>(StatusCodes.Status200OK)
 				.Produces<string>(StatusCodes.Status400BadRequest)
 				.WithApiVersionSet(EndpointVersion.VersionSet)
 				.HasApiVersion(1.0);
 		}
 
 		public static async Task<IResult> GenerateTokenByRefreshToken(
-			GenerateBearerTokenByRefreshTokenRequest rqstTokenByRefreshToken,
+			GenerateJwtTokenByRefreshTokenRequest rqstTokenByRefreshToken,
 			HttpContext httpContext,
 			ISender mdtMediator,
 			CancellationToken tknCancellation)
 		{
-			BearerTokenByRefreshTokenCommand cmdInsert = rqstTokenByRefreshToken.MapToCommand();
+			JwtTokenByRefreshTokenCommand cmdInsert = rqstTokenByRefreshToken.MapToCommand();
 
-			IMessageResult<string> mdtResult = await mdtMediator.Send(cmdInsert, tknCancellation);
+			IMessageResult<JwtTokenTransferObject> mdtResult = await mdtMediator.Send(cmdInsert, tknCancellation);
 
 			return mdtResult.Match(
 				msgError => Results.BadRequest($"{msgError.Code}: {msgError.Description}"),
-				sToken => TypedResults.Ok(sToken));
+				dtoJwtToken => TypedResults.Ok(dtoJwtToken.MapToResponse()));
 		}
 
-		private static BearerTokenByRefreshTokenCommand MapToCommand(this GenerateBearerTokenByRefreshTokenRequest cmdRequest)
+		private static JwtTokenByRefreshTokenCommand MapToCommand(this GenerateJwtTokenByRefreshTokenRequest cmdRequest)
 		{
-			return new BearerTokenByRefreshTokenCommand()
+			return new JwtTokenByRefreshTokenCommand()
 			{
 				PassportId = cmdRequest.PassportId,
 				Provider = cmdRequest.Provider,
 				RefreshToken = cmdRequest.RefreshToken
+			};
+		}
+
+		private static JwtTokenResponse MapToResponse(this JwtTokenTransferObject dtoJwtToken)
+		{
+			return new JwtTokenResponse()
+			{
+				ExpiredAt = dtoJwtToken.ExpiredAt,
+				Provider = dtoJwtToken.Provider,
+				RefreshToken = dtoJwtToken.RefreshToken,
+				Token = dtoJwtToken.Token
 			};
 		}
 	}
